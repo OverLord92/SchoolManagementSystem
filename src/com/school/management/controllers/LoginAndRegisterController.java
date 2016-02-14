@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.school.management.model.Admin;
 import com.school.management.model.Student;
 import com.school.management.model.Teacher;
 import com.school.management.model.User;
@@ -45,4 +46,25 @@ public class LoginAndRegisterController {
 			return "registrationPage";
 		}
 	}
+	
+	@RequestMapping(value="/registerAdmin", method=RequestMethod.POST)
+	public String registerAdmin(Admin admin) {
+		if(userService.saveAdmin(admin)) {
+			return "admin";
+		} else {
+			return "registrationPage";
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
