@@ -1,4 +1,4 @@
-package com.school.management.mvc.spec;
+package com.school.management.web.layer.spec;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Matchers.any;
@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -26,9 +27,8 @@ import com.school.management.config.WebConfig;
 import com.school.management.controllers.LoginAndRegisterController;
 import com.school.management.services.UserService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes={ RootConfig.class, WebConfig.class, WebAppInitializer.class })
+@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration(classes={ RootConfig.class })
 public class LoginSpec {
 	
 	
