@@ -1,7 +1,11 @@
 package com.school.management.controllers;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,8 +38,6 @@ public class StudentController {
 		String username = principal.getName();
 		Student student = userService.getStudentByUsernameWithCollections(username, true, true, false, false);
 		
-		System.out.println(student);
-		
 		// get all requestable courses
 		List<Course>allAvailableCourses = courseService.getAllNeitherRequiredNorAttendedCourses(student);
 		model.addAttribute("allAvailableCourses", allAvailableCourses);
@@ -43,7 +45,6 @@ public class StudentController {
 		model.addAttribute("attendingCourses", student.getAttendourse());
 		model.addAttribute("pendingRequests", student.getWantedCourses());
 	
-				
 		return "studentAccount";
 	}
 	
@@ -71,12 +72,30 @@ public class StudentController {
 		String teacherUsername = principal.getName();
 		
 		Teacher teacher = userService.getTeacherByUsername(teacherUsername);
+		Set<Course> courses = teacher.getCourses();
 		
-		model.addAttribute("teachersCourses", teacher.getCourses());
-		return "teacher";
+		model.addAttribute("teachersCourses", courses);
+		return "teacherAccount";
 	}
 	
-	
+	@RequestMapping(value="/getStudentsCourse/{courseId}", method=RequestMethod.GET, produces="application/json")
+	public @ResponseBody Map<String, Object> getCourseStudents(@PathVariable Long courseId) {
+		
+		Map<String, Object> resultData = new HashMap<>();
+		Course course = courseService.getCourseWithStudents(courseId);
+		
+		Set<Student> students = course.getStudents();
+		
+		Iterator<Student> iter = students.iterator();
+		while(iter.hasNext()) {
+			Student student = (Student)iter.next();
+			student.setAttendourse(null);
+		}
+		
+		resultData.put("studentsAtendingCourse", students);
+		
+		return resultData;
+	}
 	
 	
 	

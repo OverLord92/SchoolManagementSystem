@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.authorizeRequests()
 				.antMatchers("/studentAccount").authenticated()
+				.antMatchers("/teacherAccount").authenticated()
 			.and()
 				.formLogin()
 				.defaultSuccessUrl("/")

@@ -34,8 +34,6 @@ public class Student extends User {
 	
 	
 	public Student() {
-//		courseRequests = new HashSet<>();
-//		attendedCourses = new HashSet<>();
 		grades = new HashSet<>();
 		absences = new HashSet<>();
 	}

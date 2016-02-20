@@ -31,15 +31,6 @@ public class CourseServiceImpl implements CourseService {
 	
 	@Autowired
 	CourseRequestDao courseRequestDao;
-	
-//	@Override
-//	public boolean approveCourseRequest(Long studentId, Long courseId) {
-//		Student student = studentDao.get(studentId);
-//		Course course = courseDao.get(courseId);
-//		student.moveCourseFronRequestedToApproved(course);
-//		studentDao.update(student);
-//		return true;
-//	}
 
 	@Override
 	public boolean addNewCourse(Course course) {
@@ -151,6 +142,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public void addCourseToTeacher(Long teacherId, Long courseId) {
 		teacherDao.addCourseToTeacher(teacherId, courseId);
+	}
+
+	@Override
+	public Course getCourseWithStudents(Long courseId) {
+		return courseDao.getCourseWithStudents(courseId);
 	}
 
 }

@@ -28,6 +28,7 @@ public interface CourseService {
 	Teacher getTeacherWithCourses(Long teacherId);
 	void updateTeacher(Teacher teacher);
 	
+	Course getCourseWithStudents(Long courseId);
 	void addCourseToTeacher(Long teacherId, Long courseId);
 	
 }

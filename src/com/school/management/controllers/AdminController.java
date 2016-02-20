@@ -57,9 +57,6 @@ public class AdminController {
 			produces="application/json")
 	public @ResponseBody Map<String, Object> getAllFreeCourses(@RequestBody Map<String, Object> requestData) {
 		
-		Long teacherId = Long.parseLong((String)requestData.get("teacherId"));
-		System.out.println(teacherId);
-		
 		List<Course> allFreeCourses = courseService.getAllFreeCourses();  
 
 		Map<String, Object> resultData  = new HashMap<>();
