@@ -23,7 +23,7 @@ public class Course extends BaseEntity {
 	@OneToOne
 	private Teacher teacher;
 	
-	@ManyToMany(fetch=FetchType.LAZY, mappedBy="attendingCourses")
+	@ManyToMany(mappedBy="attendingCourses", fetch=FetchType.EAGER)
 	private Set<Student> students;
 	
 	
@@ -51,12 +51,4 @@ public class Course extends BaseEntity {
 	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
-	
-	@Override
-	public String toString() {
-		return "Course [name=" + name + ", code=" + code + ", teacher=" + teacher + ", students=" + students + "]";
-	}
-	
-	
-	
 }

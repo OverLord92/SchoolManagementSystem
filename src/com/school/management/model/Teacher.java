@@ -41,8 +41,7 @@ public class Teacher extends User {
 	}
 
 	public void addCourse(Course course) {
-		// TODO Auto-generated method stub
-		
+		courses.add(course);
 	}
 
 }

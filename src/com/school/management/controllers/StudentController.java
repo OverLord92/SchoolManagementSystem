@@ -48,15 +48,20 @@ public class StudentController {
 	public @ResponseBody boolean requestCourse(@PathVariable Long courseId, Principal principal) {
 		
 		String username = principal.getName();
-		Student student = userService.getStudentByUsername(username);
+		Student student = userService.getStudentByUsernameWithCollections(username, true, false, false, false);
+		
+		Course course = courseService.getCourse(courseId);
+		String courseName = course.getName();
 		
 		CourseRequest courseRequest = new CourseRequest();
 		courseRequest.setStudentId(student.getId());
+		courseRequest.setStudentUsername(username);
 		courseRequest.setCourseId(courseId);
+		courseRequest.setCourseName(courseName);
 		
 		student.getCourseRequests().add(courseRequest);
 		
-		userService.mergeStudent(student);
+		userService.updateStudent(student);
 
 		return true;
 	}

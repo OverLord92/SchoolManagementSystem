@@ -52,8 +52,8 @@
 <fieldset>
 	<c:forEach items="${allCourseRequests}" var="courseRequest">
 		<div class="courseRequest">
-			student ID: ${courseRequest.studentId}<br>
-			course code: ${courseRequest.courseId}<br>
+			student username: ${courseRequest.studentUsername}<br>
+			course name: ${courseRequest.courseName}<br>
 			<a class="courseRequest" href="#" id="${courseRequest.id}">
 				approve request</a>
 		</div><br>

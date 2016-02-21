@@ -24,7 +24,7 @@ public class CourseServiceImpl implements CourseService {
 	CourseDao courseDao;
 	
 	@Autowired
-	StudentDao studentDao;   /// premjestiti ovo u genericdao impl
+	StudentDao studentDao; 
 	
 	@Autowired
 	TeacherDao teacherDao;
@@ -39,6 +39,16 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	public List<Course> getAllCourses() {
+		return courseDao.getAll();
+	}
+	
+	@Override
+	public List<Course> getAllFreeCourses() {
+		return courseDao.getFreeCourses();
+	}
+	
+	@Override
 	public boolean assingCourseToTeacher(Long courseId, Long teacherId) {
 		Course course = courseDao.get(courseId);
 		Teacher teacher = teacherDao.get(teacherId);
@@ -46,10 +56,6 @@ public class CourseServiceImpl implements CourseService {
 		return false;
 	}
 
-	@Override
-	public List<Course> getAllCourses() {
-		return courseDao.getAll();
-	}
 
 	@Override
 	public List<Course> getAllNeitherRequiredNorAttendedCourses(Student student) {
@@ -61,7 +67,7 @@ public class CourseServiceImpl implements CourseService {
 		// filter already attending courses from all courses
 		boolean addCourse = true;
 		for(int i = 0; i < allCourses.size(); i++) {
-			System.out.println(allCourses.get(i));
+			
 			addCourse = true;
 			Course course = null;
 			for(Course attendedcourse: attendedCourses) {
@@ -124,14 +130,10 @@ public class CourseServiceImpl implements CourseService {
 		return teacherDao.getAll();
 	}
 
-	@Override
-	public List<Course> getAllFreeCourses() {
-		return courseDao.getFreeCourses();
-	}
 
 	@Override
 	public Teacher getTeacherWithCourses(Long teacherId) {
-		return teacherDao.getTeacherWithCourses(teacherId);
+		return teacherDao.getTeacherByIdWithCourses(teacherId);
 	}
 
 	@Override
@@ -143,10 +145,4 @@ public class CourseServiceImpl implements CourseService {
 	public void addCourseToTeacher(Long teacherId, Long courseId) {
 		teacherDao.addCourseToTeacher(teacherId, courseId);
 	}
-
-	@Override
-	public Course getCourseWithStudents(Long courseId) {
-		return courseDao.getCourseWithStudents(courseId);
-	}
-
 }

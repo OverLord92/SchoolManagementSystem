@@ -8,11 +8,12 @@ import com.school.management.model.Teacher;
 @Repository
 public interface TeacherDao extends GenericDao<Long, Teacher>{
 
-	Teacher getTeacherWithCourses(Long teacherId);
+
 	Teacher getTeacherByUsernameWithCourses(String teacherUsername);
+	Teacher getTeacherByUsername(String teacherUsername);
+	Teacher getTeacherByIdWithCourses(Long teacherId);
 	
 	void addCourseToTeacher(Long teacherId, Long courseId);
-	Teacher getTeacherByUsername(String teacherUsername);
 	
 	
 	

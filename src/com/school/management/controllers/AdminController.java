@@ -1,7 +1,6 @@
 package com.school.management.controllers;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +45,6 @@ public class AdminController {
 	
 	@RequestMapping(value="/addCourse", method=RequestMethod.POST)
 	public String addNewCourse(Course course) {
-		
 		courseService.addNewCourse(course);
 		return "redirect:/adminPage";
 	}
@@ -56,16 +54,9 @@ public class AdminController {
 	public @ResponseBody Map<String, Object> getAllFreeCourses(@RequestBody Map<String, Object> requestData) {
 		
 		List<Course> allFreeCourses = courseService.getAllFreeCourses();  
-		Iterator<Course> iter = allFreeCourses.iterator();
-		while(iter.hasNext()) {
-			Course course = iter.next();
-			course.setStudents(null);
-		}
 		
 		Map<String, Object> resultData  = new HashMap<>();
 		resultData.put("allFreeCourses", allFreeCourses);
-		
-		System.out.println("zavrsilo je metodu");
 		
 		return resultData;
 	}
@@ -86,12 +77,9 @@ public class AdminController {
 	public @ResponseBody boolean approveCourseRequest(@RequestBody Map<String, Object> requestData) {
 		
 		Long courseRequestId = Long.parseLong((String)requestData.get("courseRequestId"));
-		CourseRequest courseRequest = courseService.getCourseRequest(courseRequestId);
-	
+			
 		useService.addCourseToStudent(courseRequestId);
-		
-		courseService.deleteCourseRequest(courseRequest);
-		
+				
 		return true;
 	}
 	

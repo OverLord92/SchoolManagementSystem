@@ -31,7 +31,7 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 	}
 
 	@Override
-	public Teacher getTeacherWithCourses(Long teacherId) {
+	public Teacher getTeacherByIdWithCourses(Long teacherId) {
 		Teacher teacher = get(teacherId);
 		Hibernate.initialize(teacher.getCourses());
 		return teacher;
@@ -42,9 +42,8 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 		Criteria criteria = getSession().createCriteria(Teacher.class);
 		criteria.add(Restrictions.eq("username", teacherUsername));
 		
-		Teacher teacher = (Teacher)criteria.uniqueResult();
-		Hibernate.initialize(teacher.getCourses());
-		return teacher;
+		return (Teacher)criteria.uniqueResult();
+		
 	}
 	
 	@Override

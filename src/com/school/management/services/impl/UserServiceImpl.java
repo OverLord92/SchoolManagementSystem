@@ -79,12 +79,6 @@ public class UserServiceImpl implements UserService{
 		studentDao.update(student);
 		return true;
 	}
-
-	@Override
-	public boolean mergeStudent(Student student) {
-		studentDao.merge(student);
-		return true;
-	}
 	
 	@Override
 	public boolean saveCourseRequest(CourseRequest courseRequest) {
@@ -100,7 +94,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Student getStudentByUsernameWithCollections(String username, 
 			boolean requests, boolean courses, boolean grades, boolean absences) {
-		System.out.println("juzer servis");
+		
 		return studentDao.getStudentByUsernameWithCollections(username, requests, courses, grades, absences);
 	}
 

@@ -18,12 +18,6 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 		super(Course.class);
 	}
 
-	@Override
-	public Course getCourseWithStudents(Long courseId) {
-		Course course = get(courseId);
-		Hibernate.initialize(course.getStudents());
-		return course;
-	}
 	
 	@SuppressWarnings("unchecked")
 	@Override

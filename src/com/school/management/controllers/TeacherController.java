@@ -46,7 +46,7 @@ public class TeacherController {
 	public @ResponseBody Map<String, Object> getCourseStudents(@PathVariable Long courseId) {
 		
 		Map<String, Object> resultData = new HashMap<>();
-		Course course = courseService.getCourseWithStudents(courseId);
+		Course course = courseService.getCourse(courseId);
 		
 		Set<Student> students = course.getStudents();
 		

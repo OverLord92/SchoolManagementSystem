@@ -29,7 +29,7 @@
 <h3>pending requests</h3>
 <c:forEach items="${pendingRequests}" var="currentCourseRequest">
 	<div>
-		<a class="requestLink" href="#">${currentCourseRequest.id}</a><br>
+		<a class="requestLink" href="#">${currentCourseRequest.courseName}</a><br>
 	</div>
 </c:forEach>
 

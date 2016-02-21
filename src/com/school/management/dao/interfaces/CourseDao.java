@@ -10,6 +10,5 @@ import com.school.management.model.Course;
 @Repository
 public interface CourseDao extends GenericDao<Long, Course>{
 
-	Course getCourseWithStudents(Long courseId);
 	List<Course> getFreeCourses();
 }

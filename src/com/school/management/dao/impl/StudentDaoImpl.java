@@ -51,9 +51,13 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		if(courses) {
 			Hibernate.initialize(student.getAttendingCourses());
 		}
+		if(grades) {
+			Hibernate.initialize(student.getGrades());
+		}
+		if(absences) {
+			Hibernate.initialize(student.getAbsences());
+		}
 		
-
-		System.out.println("dao metoda 22");
 		return student;
 	}
 
@@ -68,7 +72,12 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		if(courses) {
 			Hibernate.initialize(student.getAttendingCourses());
 		}
-		
+		if(grades) {
+			Hibernate.initialize(student.getGrades());
+		}
+		if(absences) {
+			Hibernate.initialize(student.getAbsences());
+		}
 		return student;
 	}
 
@@ -84,7 +93,9 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		
 		student.getAttendingCourses().add(course);
 		student.getCourseRequests().remove(courseRequest);
-	
+		
+		session.delete(courseRequest);
+		
 		txn.commit();
 		session.close();
 		return true;
