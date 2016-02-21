@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.school.management.dao.generic.GenericDaoImpl;
 import com.school.management.dao.interfaces.StudentDao;
+import com.school.management.model.Absence;
 import com.school.management.model.Course;
 import com.school.management.model.CourseRequest;
 import com.school.management.model.Student;
@@ -24,7 +25,7 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 	
 	@Override
 	public boolean save(Student student) {
-		student.setEncodedPassword(encoder.encode(student.getPassword()));
+		student.setEncodedPassword(encoder.encode(student.getRawPassword()));
 		super.save(student);
 		return true;
 	}
@@ -45,10 +46,10 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		Student student = getStudentByUsername(username);
 		
 		if(requests) {
-			Hibernate.initialize(student.getWantedCourses());
+			Hibernate.initialize(student.getCourseRequests());
 		}
 		if(courses) {
-			Hibernate.initialize(student.getAttendourse());
+			Hibernate.initialize(student.getAttendingCourses());
 		}
 		
 
@@ -62,11 +63,12 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		Student student = get(userId);
 		
 		if(requests) {
-			Hibernate.initialize(student.getWantedCourses());
+			Hibernate.initialize(student.getCourseRequests());
 		}
 		if(courses) {
-			Hibernate.initialize(student.getAttendourse());
+			Hibernate.initialize(student.getAttendingCourses());
 		}
+		
 		return student;
 	}
 
@@ -80,12 +82,26 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		Student student = session.get(Student.class, courseRequest.getStudentId());
 		Course course = session.get(Course.class, courseRequest.getCourseId());
 		
-		student.addCourse(course);
-		student.getWantedCourses().remove(courseRequest);
+		student.getAttendingCourses().add(course);
+		student.getCourseRequests().remove(courseRequest);
 	
 		txn.commit();
 		session.close();
 		return true;
+	}
+	
+	@Override
+	public void addAbsenceToStudent(Long studentId, Absence absence) {
+		Session session = sessionFactory.openSession();
+		Transaction txn = session.beginTransaction();
+		
+		
+		Student student = session.get(Student.class, studentId);
+		
+		student.getAbsences().add(absence);
+	
+		txn.commit();
+		session.close();
 	}
 
 

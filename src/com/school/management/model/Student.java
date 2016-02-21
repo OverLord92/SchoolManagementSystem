@@ -17,19 +17,26 @@ import com.school.management.model.abstr.User;
 @Entity
 public class Student extends User {
 
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@OneToMany(cascade=CascadeType.ALL)
 	private Set<CourseRequest> courseRequests;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(
-			joinColumns=@JoinColumn(name="courseId"),
-			inverseJoinColumns=@JoinColumn(name="")      
+			name="student_course",
+			joinColumns=@JoinColumn(name="studentId"),
+			inverseJoinColumns=@JoinColumn(name="courseId")      
 	)
-	private Set<Course> attendedCourses;
+	private Set<Course> attendingCourses;
 	
 	@Transient
 	private Set<Grade> grades;
-	@Transient
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Set<Absence> absences;
 	
 	
@@ -42,28 +49,28 @@ public class Student extends User {
 		this();
 		this.setId(user.getId());
 		this.setUsername(user.getUsername());
-		this.setPassword(user.getPassword());
+		this.setRawPassword(user.getRawPassword());
 		this.setFirstName(user.getFirstName());
 		this.setLastName(user.getLastName());
 	}
 
 	
-	public Set<CourseRequest> getWantedCourses() {
+	public Set<CourseRequest> getCourseRequests() {
 		return courseRequests;
 	}
 
-	public void setWantedCourses(Set<CourseRequest> wantedCourses) {
-		this.courseRequests = wantedCourses;
+	public void setCourseRequests(Set<CourseRequest> courseRequests) {
+		this.courseRequests = courseRequests;
 	}
 
-	public Set<Course> getAttendourse() {
-		return attendedCourses;
+	public Set<Course> getAttendingCourses() {
+		return attendingCourses;
 	}
 
-	public void setAttendourse(Set<Course> attendourse) {
-		this.attendedCourses = attendourse;
+	public void setAttendingCourses(Set<Course> attendingCourses) {
+		this.attendingCourses = attendingCourses;
 	}
-	
+
 	public Set<Grade> getGrades() {
 		return grades;
 	}
@@ -78,23 +85,6 @@ public class Student extends User {
 
 	public void setAbsences(Set<Absence> absences) {
 		this.absences = absences;
-	}
-
-	public void addCourse(Course course) {
-		this.attendedCourses.add(course);
-	}
-
-	public void deleteRequestFromUser(CourseRequest courseRequest) {
-		attendedCourses.remove(courseRequest);
-	}
-	
-	public void addAbsence(Absence absence) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addCourseRequest(CourseRequest courseRequest) {
-		this.getWantedCourses().add(courseRequest);
 	}
 
 }

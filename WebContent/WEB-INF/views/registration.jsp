@@ -20,7 +20,7 @@
 	</div>		
 	<div class="form-group">
 		<label for="username">password</label>
-		<form:input path="password"/>
+		<form:input path="rawPassword"/>
 	</div>
 	<div class="form-group">
 		<label for="username">first name</label>
@@ -44,7 +44,7 @@
 	</div>		
 	<div class="form-group">
 		<label for="username">password</label>
-		<form:input path="password"/>
+		<form:input path="rawPassword"/>
 	</div>
 	<div class="form-group">
 		<label for="username">first name</label>
@@ -68,7 +68,7 @@
 	</div>		
 	<div class="form-group">
 		<label for="username">password</label>
-		<form:input path="password"/>
+		<form:input path="rawPassword"/>
 	</div>
 	<div class="form-group">
 		<label for="username">first name</label>

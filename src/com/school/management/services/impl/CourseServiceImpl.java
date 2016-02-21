@@ -56,7 +56,7 @@ public class CourseServiceImpl implements CourseService {
 		List<Course> firstResult = new ArrayList<>();
 		
 		List<Course> allCourses = courseDao.getAll();
-		Set<Course> attendedCourses = student.getAttendourse();       //// popravi ourse na course
+		Set<Course> attendedCourses = student.getAttendingCourses();
 		
 		// filter already attending courses from all courses
 		boolean addCourse = true;
@@ -82,7 +82,7 @@ public class CourseServiceImpl implements CourseService {
 		
 		ArrayList<Course> endResult = new ArrayList<>();
 		// filter already requested courses from remained courses
-		Set<CourseRequest> courseRequests = student.getWantedCourses();
+		Set<CourseRequest> courseRequests = student.getCourseRequests();
 		
 		// put all courseids of the courseRequest in a list
 		ArrayList<Long> courseRequestCourseIds = new ArrayList<>();

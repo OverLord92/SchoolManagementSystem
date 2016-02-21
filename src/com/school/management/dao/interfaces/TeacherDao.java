@@ -12,6 +12,7 @@ public interface TeacherDao extends GenericDao<Long, Teacher>{
 	Teacher getTeacherByUsernameWithCourses(String teacherUsername);
 	
 	void addCourseToTeacher(Long teacherId, Long courseId);
+	Teacher getTeacherByUsername(String teacherUsername);
 	
 	
 	

@@ -13,13 +13,16 @@
 	src="<c:url value="/resources/js/teacher.js"/>"></script>
 </head>
 <body>
+
+<c:url value="/logout" var="logoutUrl" />
+<a href="${logoutUrl}">Logout</a>
+
 <h1>ticr</h1>
 
 <fieldset class="teacherCourses">
 	<c:forEach items="${teachersCourses}" var="course">
-		<div class="teacher">
-			<c:url value="/getStudentsCourse/${course.id}" var="getStudentsLink"/>
-			<a class="chooseCourseLink" href="${getStudentsLink}">${course.name}</a><br>
+		<div class="course" id="${course.id}">
+			${course.name}
 		</div>
 	</c:forEach>
 </fieldset>

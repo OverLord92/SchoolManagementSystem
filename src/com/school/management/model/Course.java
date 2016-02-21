@@ -12,13 +12,18 @@ import com.school.management.model.abstr.BaseEntity;
 @Entity
 public class Course extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String code;
 	
 	@OneToOne
 	private Teacher teacher;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy="attendingCourses")
 	private Set<Student> students;
 	
 	

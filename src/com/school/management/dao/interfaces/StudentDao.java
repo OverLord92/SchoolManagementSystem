@@ -3,6 +3,7 @@ package com.school.management.dao.interfaces;
 import org.springframework.stereotype.Repository;
 
 import com.school.management.dao.generic.GenericDao;
+import com.school.management.model.Absence;
 import com.school.management.model.Course;
 import com.school.management.model.Student;
 
@@ -18,5 +19,7 @@ public interface StudentDao extends GenericDao<Long, Student>{
 			boolean absences);
 
 	boolean addCourseToStudent(Long courseRequstId);
+
+	void addAbsenceToStudent(Long studentId, Absence absence);
 	
 }

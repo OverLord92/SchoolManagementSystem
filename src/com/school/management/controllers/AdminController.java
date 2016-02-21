@@ -1,10 +1,9 @@
 package com.school.management.controllers;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.school.management.model.Course;
 import com.school.management.model.CourseRequest;
-import com.school.management.model.Student;
 import com.school.management.model.Teacher;
 import com.school.management.services.CourseService;
 import com.school.management.services.UserService;
@@ -58,9 +56,16 @@ public class AdminController {
 	public @ResponseBody Map<String, Object> getAllFreeCourses(@RequestBody Map<String, Object> requestData) {
 		
 		List<Course> allFreeCourses = courseService.getAllFreeCourses();  
-
+		Iterator<Course> iter = allFreeCourses.iterator();
+		while(iter.hasNext()) {
+			Course course = iter.next();
+			course.setStudents(null);
+		}
+		
 		Map<String, Object> resultData  = new HashMap<>();
 		resultData.put("allFreeCourses", allFreeCourses);
+		
+		System.out.println("zavrsilo je metodu");
 		
 		return resultData;
 	}

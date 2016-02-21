@@ -30,6 +30,7 @@ public interface UserService {
 			String username, boolean requests, boolean courses, boolean grades, boolean absences);
 	boolean addCourseToStudent(Long courseRequstId);
 	Teacher getTeacherByUsername(String teacherUsername);
+	Teacher getTeacherByUsernameWithCourses(String teacherUsername);
 	
 	
 }

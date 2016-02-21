@@ -13,6 +13,8 @@
 	src="<spring:url value="/resources/js/student.js"/>"></script>
 </head>
 <body>
+<c:url value="/logout" var="logoutUrl" />
+<a href="${logoutUrl}">Logout</a>
 <h1>stjudent</h1>
 
 

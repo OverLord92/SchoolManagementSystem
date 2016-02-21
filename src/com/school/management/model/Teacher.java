@@ -1,6 +1,5 @@
 package com.school.management.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,18 +11,22 @@ import com.school.management.model.abstr.User;
 @Entity
 public class Teacher extends User {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@OneToMany(mappedBy="teacher", cascade=CascadeType.ALL)
 	private Set<Course> courses;
 	
 	public Teacher() {
-		courses = new HashSet<>();
 	}
 	
 	public Teacher(User user) {
 		this();
 		this.setId(user.getId());
 		this.setUsername(user.getUsername());
-		this.setPassword(user.getPassword());
+		this.setRawPassword(user.getRawPassword());
 		this.setFirstName(user.getFirstName());
 		this.setLastName(user.getLastName());
 	}

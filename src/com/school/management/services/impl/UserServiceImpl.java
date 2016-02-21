@@ -1,5 +1,6 @@
 package com.school.management.services.impl;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,14 +58,13 @@ public class UserServiceImpl implements UserService{
 	public boolean requestCourse(Long studentId, Long courseId) {
 		Student student = studentDao.get(studentId);
 		Course course = courseDao.get(courseId);
-		student.addCourse(course);
+		student.getAttendingCourses().add(course);                       ////////???
 		return true;
 	}
 
 	@Override
 	public boolean addAbsence(Long studentId, Absence absence) {
-		Student student = studentDao.get(studentId);
-		student.addAbsence(absence);
+		studentDao.addAbsenceToStudent(studentId, absence);
 		return true;
 	}
 
@@ -124,6 +124,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Teacher getTeacherByUsername(String teacherUsername) {
 		return teacherDao.getTeacherByUsernameWithCourses(teacherUsername);
+	}
+
+	@Override
+	public Teacher getTeacherByUsernameWithCourses(String teacherUsername) {
+		Teacher teacher = getTeacherByUsername(teacherUsername);
+		Hibernate.initialize(teacher.getCourses());
+		return teacher;
 	}
 
 

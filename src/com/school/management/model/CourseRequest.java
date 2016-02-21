@@ -7,6 +7,11 @@ import com.school.management.model.abstr.BaseEntity;
 @Entity
 public class CourseRequest extends BaseEntity {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long studentId;
 	private Long courseId;
 	

@@ -6,36 +6,36 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class User extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String username;
 	
 	@Transient
-	private String password;
+	private String rawPassword;
 	@Column(name="password")
 	private String encodedPassword;
 	private boolean enabled;
 	private String authority;
 	private String firstName;
 	private String lastName;
-
-	
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
-		return password;
+	public String getRawPassword() {
+		return rawPassword;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setRawPassword(String rawPassword) {
+		this.rawPassword = rawPassword;
 	}
 	public String getEncodedPassword() {
 		return encodedPassword;
@@ -66,11 +66,5 @@ public class User extends BaseEntity {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	
-	@Override
-	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", encodedPassword=" + encodedPassword
-				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
 }

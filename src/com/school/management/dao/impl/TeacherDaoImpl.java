@@ -1,5 +1,8 @@
 package com.school.management.dao.impl;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -22,7 +25,7 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 	
 	@Override
 	public boolean save(Teacher teacher) {
-		teacher.setEncodedPassword(encoder.encode(teacher.getPassword()));
+		teacher.setEncodedPassword(encoder.encode(teacher.getRawPassword()));
 		super.save(teacher);
 		return true;
 	}
@@ -35,12 +38,26 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 	}
 
 	@Override
-	public Teacher getTeacherByUsernameWithCourses(String teacherUsername) {
+	public Teacher getTeacherByUsername(String teacherUsername) {
 		Criteria criteria = getSession().createCriteria(Teacher.class);
 		criteria.add(Restrictions.eq("username", teacherUsername));
 		
 		Teacher teacher = (Teacher)criteria.uniqueResult();
 		Hibernate.initialize(teacher.getCourses());
+		return teacher;
+	}
+	
+	@Override
+	public Teacher getTeacherByUsernameWithCourses(String teacherUsername) {
+		Teacher teacher = getTeacherByUsername(teacherUsername);
+		Hibernate.initialize(teacher.getCourses());
+		
+		Set<Course> courses = teacher.getCourses();
+		Iterator<Course> iter = courses.iterator();
+		while(iter.hasNext()) {
+			Hibernate.initialize(iter.next().getStudents());
+		}
+		
 		return teacher;
 	}
 
