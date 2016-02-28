@@ -1,10 +1,12 @@
 package com.school.management.services;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 
 import com.school.management.model.Absence;
 import com.school.management.model.Admin;
-import com.school.management.model.CourseRequest;
+import com.school.management.model.Course;
 import com.school.management.model.Grade;
 import com.school.management.model.Student;
 import com.school.management.model.Teacher;
@@ -12,26 +14,24 @@ import com.school.management.model.Teacher;
 @Service
 public interface UserService {
 
+	// admin methods
 	boolean saveAdmin(Admin admin);
+	boolean approveCourseRequest(Long courseRequstId);
 	
-	boolean saveStudent(Student student);
-	boolean updateStudent(Student student);
-	boolean requestCourse(Long studentId, Long courseId);
-	boolean saveCourseRequest(CourseRequest courseRequest);
-	Student getStudent(long id);
-	Student getStudentByUsername(String username);
-	Student getStudentByIdWithCollections(
-			Long userId, boolean requests, boolean courses, boolean grades, boolean absences);
-	Student getStudentByUsernameWithCollections(
-			String username, boolean requests, boolean courses, boolean grades, boolean absences);
-	boolean addCourseToStudent(Long courseRequstId);
-	
-	
+	// teacher methods
 	boolean saveTeacher(Teacher teeacher);
-	Teacher getTeacherByUsername(String teacherUsername);
-	Teacher getTeacherByUsernameWithCourses(String teacherUsername);
+	public boolean updateStudent(Student student);
+	Teacher getTeacherByUsername(String username);
 	
 	boolean addAbsence(Long studentId, Absence absence);
 	boolean addGrade(Long studentId, Grade grade);
+	Set<Course> getTeachersCourses(Teacher teacher);
+	
+	boolean saveStudent(Student student);
+	boolean requestCourse(Student student, Long courseId);
+	
+	Student getStudent(long id);
+	Student getStudentByUsername(String username);
+	Student getStudentByUsernameWithCourses(String username);
 	
 }

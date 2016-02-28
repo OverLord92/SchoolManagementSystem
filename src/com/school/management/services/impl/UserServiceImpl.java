@@ -1,12 +1,12 @@
 package com.school.management.services.impl;
 
-import org.hibernate.Hibernate;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.school.management.dao.interfaces.AdminDao;
 import com.school.management.dao.interfaces.CourseDao;
-import com.school.management.dao.interfaces.CourseRequestDao;
 import com.school.management.dao.interfaces.StudentDao;
 import com.school.management.dao.interfaces.TeacherDao;
 import com.school.management.model.Absence;
@@ -33,9 +33,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	CourseDao courseDao;
 	
-	@Autowired
-	CourseRequestDao courseRequestDao;
-	
 	@Override
 	public boolean saveStudent(Student student) {
 		studentDao.save(student);
@@ -55,14 +52,6 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean requestCourse(Long studentId, Long courseId) {
-		Student student = studentDao.get(studentId);
-		Course course = courseDao.get(courseId);
-		student.getAttendingCourses().add(course);                       ////////???
-		return true;
-	}
-
-	@Override
 	public boolean addAbsence(Long studentId, Absence absence) {
 		studentDao.addAbsenceToStudent(studentId, absence);
 		return true;
@@ -70,8 +59,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean addGrade(Long studentId, Grade grade) {
-		// TODO Auto-generated method stub
-		return false;
+		studentDao.addGradeToStudent(studentId, grade);
+		return true;
 	}
 
 	@Override
@@ -81,32 +70,13 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public boolean saveCourseRequest(CourseRequest courseRequest) {
-		courseRequestDao.save(courseRequest);
-		return true;
-	}
-
-	@Override
 	public Student getStudent(long id) {
 		return studentDao.get(id);
 	}
 
 	@Override
-	public Student getStudentByUsernameWithCollections(String username, 
-			boolean requests, boolean courses, boolean grades, boolean absences) {
-		
-		return studentDao.getStudentByUsernameWithCollections(username, requests, courses, grades, absences);
-	}
-
-	@Override
-	public Student getStudentByIdWithCollections(Long userId, boolean requests, boolean courses, boolean grades,
-			boolean absences) {
-		return studentDao.getStudentByIdWithCollections(userId, requests, courses, grades, absences);
-	}
-
-	@Override
-	public boolean addCourseToStudent(Long courseRequestId) {
-		studentDao.addCourseToStudent(courseRequestId);
+	public boolean approveCourseRequest(Long courseRequestId) {
+		studentDao.approveCourseRequest(courseRequestId);
 		return true;
 	}
 
@@ -116,16 +86,46 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Teacher getTeacherByUsername(String teacherUsername) {
-		return teacherDao.getTeacherByUsernameWithCourses(teacherUsername);
+	public Teacher getTeacherByUsername(String username) {
+		return teacherDao.getTeacherByUsername(username);
 	}
 
 	@Override
-	public Teacher getTeacherByUsernameWithCourses(String teacherUsername) {
-		Teacher teacher = getTeacherByUsername(teacherUsername);
-		Hibernate.initialize(teacher.getCourses());
-		return teacher;
+	public Set<Course> getTeachersCourses(Teacher teacher) {
+		return courseDao.getTeachersCourses(teacher);
 	}
 
+	@Override
+	public boolean requestCourse(Student student, Long courseId) {
+		
+		Course requestedCourse = courseDao.get(courseId);
+		
+		CourseRequest courseRequest = new CourseRequest();
+		courseRequest.setStudentId(student.getId());
+		courseRequest.setStudentUsername(student.getUsername());
+		courseRequest.setCourseId(requestedCourse.getId());
+		courseRequest.setCourseName(requestedCourse.getName());
+		
+		studentDao.addCourseRequestToStudent(student, courseRequest);
+		
+		return false;
+	}
 
+	@Override
+	public Student getStudentByUsernameWithCourses(String username) {
+		return studentDao.getStudentWithCoursesAndRequests(username);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

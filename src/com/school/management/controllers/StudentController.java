@@ -31,7 +31,7 @@ public class StudentController {
 	public String showAccount(Model model, Principal principal) {
 		
 		String username = principal.getName();
-		Student student = userService.getStudentByUsernameWithCollections(username, true, true, false, false);
+		Student student = userService.getStudentByUsernameWithCourses(username);
 		
 		// get all requestable courses
 		List<Course>allAvailableCourses = courseService.getAllNeitherRequiredNorAttendedCourses(student);
@@ -48,21 +48,10 @@ public class StudentController {
 	public @ResponseBody boolean requestCourse(@PathVariable Long courseId, Principal principal) {
 		
 		String username = principal.getName();
-		Student student = userService.getStudentByUsernameWithCollections(username, true, false, false, false);
+		Student student = userService.getStudentByUsername(username);
 		
-		Course course = courseService.getCourse(courseId);
-		String courseName = course.getName();
+		userService.requestCourse(student, courseId);
 		
-		CourseRequest courseRequest = new CourseRequest();
-		courseRequest.setStudentId(student.getId());
-		courseRequest.setStudentUsername(username);
-		courseRequest.setCourseId(courseId);
-		courseRequest.setCourseName(courseName);
-		
-		student.getCourseRequests().add(courseRequest);
-		
-		userService.updateStudent(student);
-
 		return true;
 	}
 }

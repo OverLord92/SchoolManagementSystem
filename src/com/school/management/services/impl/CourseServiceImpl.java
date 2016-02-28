@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.school.management.dao.interfaces.CourseDao;
-import com.school.management.dao.interfaces.CourseRequestDao;
 import com.school.management.dao.interfaces.StudentDao;
 import com.school.management.dao.interfaces.TeacherDao;
 import com.school.management.model.Course;
@@ -29,9 +28,6 @@ public class CourseServiceImpl implements CourseService {
 	@Autowired
 	TeacherDao teacherDao;
 	
-	@Autowired
-	CourseRequestDao courseRequestDao;
-
 	@Override
 	public boolean addNewCourse(Course course) {
 		courseDao.save(course);
@@ -52,7 +48,9 @@ public class CourseServiceImpl implements CourseService {
 	public boolean assingCourseToTeacher(Long courseId, Long teacherId) {
 		Course course = courseDao.get(courseId);
 		Teacher teacher = teacherDao.get(teacherId);
-		teacher.addCourse(course);
+		
+		course.setTeacher(teacher);
+		courseDao.update(course);
 		return false;
 	}
 
@@ -106,24 +104,10 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseRequest> getAllCourseRequests() {
-		return courseRequestDao.getAll();
-	}
-
-	@Override
-	public CourseRequest getCourseRequest(Long requestId) {
-		return courseRequestDao.get(requestId);
-	}
-
-	@Override
 	public Course getCourse(Long courseId) {
 		return courseDao.get(courseId);
 	}
 
-	@Override
-	public void deleteCourseRequest(CourseRequest request) {
-		courseRequestDao.delete(request);
-	}
 
 	@Override
 	public List<Teacher> getAllTeachers() {
@@ -132,17 +116,18 @@ public class CourseServiceImpl implements CourseService {
 
 
 	@Override
-	public Teacher getTeacherWithCourses(Long teacherId) {
-		return teacherDao.getTeacherByIdWithCourses(teacherId);
-	}
-
-	@Override
 	public void updateTeacher(Teacher teacher) {
 		teacherDao.update(teacher);
 	}
 
 	@Override
-	public void addCourseToTeacher(Long teacherId, Long courseId) {
-		teacherDao.addCourseToTeacher(teacherId, courseId);
+	public List<CourseRequest> allPendingRequests() {
+		return courseDao.getAllPendingRequests();
 	}
+
+	@Override
+	public List<Student> getAllStudentsOfCourse(Long courseId) {
+		return courseDao.getAllStudentsOfCourse(courseId);
+	}
+
 }

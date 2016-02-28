@@ -12,30 +12,27 @@ import com.school.management.model.Teacher;
 @Service
 public interface CourseService {
 
+	boolean assingCourseToTeacher(Long courseId, Long teacherId);
+	List<CourseRequest> allPendingRequests();
+	
+	
 	boolean addNewCourse(Course course);
 	List<Course> getAllCourses();
 	List<Course> getAllFreeCourses();
+	List<Student> getAllStudentsOfCourse(Long courseId);
 	
-	List<CourseRequest> getAllCourseRequests();
+	
 	
 	List<Course> getAllNeitherRequiredNorAttendedCourses(Student student);
 	
-	CourseRequest getCourseRequest(Long requestId);
-	
 	Course getCourse(Long courseId);
 	
-	void deleteCourseRequest(CourseRequest request);
-	
-	
-	
-	boolean assingCourseToTeacher(Long courseId, Long teacherId);
 	
 	List<Teacher> getAllTeachers();
 	
-	Teacher getTeacherWithCourses(Long teacherId);
 	
 	void updateTeacher(Teacher teacher);
 	
-	void addCourseToTeacher(Long teacherId, Long courseId);
+
 	
 }

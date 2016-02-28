@@ -2,7 +2,7 @@ package com.school.management.controllers;
 
 import java.security.Principal;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.school.management.model.Absence;
 import com.school.management.model.Course;
+import com.school.management.model.Grade;
 import com.school.management.model.Student;
 import com.school.management.model.Teacher;
 import com.school.management.services.CourseService;
@@ -35,9 +36,9 @@ public class TeacherController {
 	public String showteacherAccount(Model model, Principal principal) {
 		
 		String teacherUsername = principal.getName();
-		Teacher teacher = userService.getTeacherByUsernameWithCourses(teacherUsername);
+		Teacher teacher = userService.getTeacherByUsername(teacherUsername);
 		
-		Set<Course> courses = teacher.getCourses();
+		Set<Course> courses = userService.getTeachersCourses(teacher);
 		model.addAttribute("teachersCourses", courses);
 		return "teacherAccount";
 	}
@@ -46,34 +47,49 @@ public class TeacherController {
 	public @ResponseBody Map<String, Object> getCourseStudents(@PathVariable Long courseId) {
 		
 		Map<String, Object> resultData = new HashMap<>();
-		Course course = courseService.getCourse(courseId);
 		
-		Set<Student> students = course.getStudents();
-		
-		Iterator<Student> iter = students.iterator();
-		while(iter.hasNext()) {
-			Student student = (Student)iter.next();
-			student.setAttendingCourses(null);
-		}
-		
+		List<Student> students = courseService.getAllStudentsOfCourse(courseId);
 		resultData.put("studentsAtendingCourse", students);
 		
 		return resultData;
 	}
 	
 	@RequestMapping(value="/addAbsenceToUser", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody boolean addAbsenceToUser(@RequestBody Map<String, Object> requestData) {//@RequestParam("studentId") String studentId, @RequestParam("courseId") String courseId) {
+	public @ResponseBody boolean addAbsenceToUser(@RequestBody Map<String, Object> requestData) {
 		
 		Long studentId = Long.parseLong((String)requestData.get("studentId"));
 		Long courseId = Long.parseLong((String)requestData.get("courseId"));
 		
+		String comment = (String)requestData.get("comment");
+		Boolean justified = (Boolean)requestData.get("justified");
+		
 		Course course = courseService.getCourse(courseId);
 		Absence absence = new Absence();
 		absence.setCourse(course);
+		absence.setJustified(justified);
+		absence.setComment(comment);
 		
 		userService.addAbsence(studentId, absence);
 		
 		return true;
+	}
+	
+	@RequestMapping(value="/addGradeToUser", method=RequestMethod.POST, consumes="application/json")
+	public @ResponseBody boolean addGradeToUser(@RequestBody Map<String, Object> requestData) {
+		
+		Long studentId = Long.parseLong((String)requestData.get("studentId"));
+		Long courseId = Long.parseLong((String)requestData.get("courseId"));
+		
+		int gradeValue = Integer.parseInt((String)requestData.get("grade"));
+		
+		Course course = courseService.getCourse(courseId);
+		
+		Grade grade = new Grade();
+		grade.setCourse(course);
+		grade.setGrade(gradeValue);
+		
+		userService.addGrade(studentId, grade);
+		return false;
 	}
 	
 	

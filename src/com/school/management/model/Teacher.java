@@ -1,10 +1,6 @@
 package com.school.management.model;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 import com.school.management.model.abstr.User;
 
@@ -16,8 +12,8 @@ public class Teacher extends User {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@OneToMany(mappedBy="teacher", cascade=CascadeType.ALL)
-	private Set<Course> courses;
+//	@OneToMany(mappedBy="teacher", cascade=CascadeType.ALL) /// izbaciti
+//	private Set<Course> courses;
 	
 	public Teacher() {
 	}
@@ -32,16 +28,16 @@ public class Teacher extends User {
 	}
 	
 	
-	public Set<Course> getCourses() {
-		return courses;
-	}
-
-	public void setCourses(Set<Course> courses) {
-		this.courses = courses;
-	}
-
-	public void addCourse(Course course) {
-		courses.add(course);
-	}
+//	public Set<Course> getCourses() {
+//		return courses;
+//	}
+//
+//	public void setCourses(Set<Course> courses) {
+//		this.courses = courses;
+//	}
+//
+//	public void addCourse(Course course) {
+//		courses.add(course);
+//	}
 
 }

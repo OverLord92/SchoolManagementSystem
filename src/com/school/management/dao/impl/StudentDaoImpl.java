@@ -5,7 +5,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.school.management.dao.generic.GenericDaoImpl;
@@ -13,10 +13,11 @@ import com.school.management.dao.interfaces.StudentDao;
 import com.school.management.model.Absence;
 import com.school.management.model.Course;
 import com.school.management.model.CourseRequest;
+import com.school.management.model.Grade;
 import com.school.management.model.Student;
 
-@Component
 @Transactional
+@Repository
 public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements StudentDao {
 
 	public StudentDaoImpl() {
@@ -38,51 +39,7 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 	}
 
 	@Override
-	public Student getStudentByUsernameWithCollections(String username, 
-			boolean requests, boolean courses, boolean grades, boolean absences) {
-		
-		System.out.println("dao metoda");
-		
-		Student student = getStudentByUsername(username);
-		
-		if(requests) {
-			Hibernate.initialize(student.getCourseRequests());
-		}
-		if(courses) {
-			Hibernate.initialize(student.getAttendingCourses());
-		}
-		if(grades) {
-			Hibernate.initialize(student.getGrades());
-		}
-		if(absences) {
-			Hibernate.initialize(student.getAbsences());
-		}
-		
-		return student;
-	}
-
-	@Override
-	public Student getStudentByIdWithCollections(Long userId, boolean requests, boolean courses, boolean grades,
-			boolean absences) {
-		Student student = get(userId);
-		
-		if(requests) {
-			Hibernate.initialize(student.getCourseRequests());
-		}
-		if(courses) {
-			Hibernate.initialize(student.getAttendingCourses());
-		}
-		if(grades) {
-			Hibernate.initialize(student.getGrades());
-		}
-		if(absences) {
-			Hibernate.initialize(student.getAbsences());
-		}
-		return student;
-	}
-
-	@Override
-	public boolean addCourseToStudent(Long courseRequstId) {
+	public boolean approveCourseRequest(Long courseRequstId) {
 		Session session = sessionFactory.openSession();
 		Transaction txn = session.beginTransaction();
 		
@@ -106,13 +63,55 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		Session session = sessionFactory.openSession();
 		Transaction txn = session.beginTransaction();
 		
-		
 		Student student = session.get(Student.class, studentId);
-		
 		student.getAbsences().add(absence);
 	
 		txn.commit();
 		session.close();
+	}
+
+	@Override
+	public void addGradeToStudent(Long studentId, Grade grade) {
+		Session session = sessionFactory.openSession();
+		Transaction txn = session.beginTransaction();
+		
+		Student student = session.get(Student.class, studentId);
+		student.getGrades().add(grade);
+	
+		txn.commit();
+		session.close();
+	}
+
+	@Override
+	public void addCourseRequestToStudent(Student student, CourseRequest courseRequst) {
+		Session session = sessionFactory.openSession();
+		Transaction txn = session.beginTransaction();
+		
+		Student mergedStudent = (Student)session.merge(student);
+		CourseRequest mergedRequest = (CourseRequest)session.merge(courseRequst);
+		
+		mergedStudent.getCourseRequests().add(mergedRequest);
+	
+		txn.commit();
+		session.close();
+	}
+
+	@Override
+	public Student getStudentWithCoursesAndRequests(String username) {
+		Session session = sessionFactory.openSession();
+		Transaction txn = session.beginTransaction();
+		
+		Student student = getStudentByUsername(username);
+		Student mergedStudent = (Student)session.merge(student);
+		
+		Hibernate.initialize(mergedStudent.getAttendingCourses());
+		Hibernate.initialize(mergedStudent.getCourseRequests());
+		
+	
+		txn.commit();
+		session.close();
+		
+		return mergedStudent;
 	}
 
 

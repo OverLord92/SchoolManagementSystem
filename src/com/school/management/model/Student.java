@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import com.school.management.model.abstr.User;
 
@@ -22,8 +22,14 @@ public class Student extends User {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private Set<CourseRequest> courseRequests;
+	
+	@ElementCollection(fetch=FetchType.LAZY) 
+	private Set<Grade> grades;
+	
+	@ElementCollection(fetch=FetchType.LAZY)
+	private Set<Absence> absences;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(
@@ -32,13 +38,6 @@ public class Student extends User {
 			inverseJoinColumns=@JoinColumn(name="courseId")      
 	)
 	private Set<Course> attendingCourses;
-	
-	@Transient
-	private Set<Grade> grades;
-	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Set<Absence> absences;
-	
 	
 	public Student() {
 		grades = new HashSet<>();
@@ -59,32 +58,16 @@ public class Student extends User {
 		return courseRequests;
 	}
 
-	public void setCourseRequests(Set<CourseRequest> courseRequests) {
-		this.courseRequests = courseRequests;
-	}
-
 	public Set<Course> getAttendingCourses() {
 		return attendingCourses;
-	}
-
-	public void setAttendingCourses(Set<Course> attendingCourses) {
-		this.attendingCourses = attendingCourses;
 	}
 
 	public Set<Grade> getGrades() {
 		return grades;
 	}
 
-	public void setGrades(Set<Grade> grades) {
-		this.grades = grades;
-	}
-
 	public Set<Absence> getAbsences() {
 		return absences;
-	}
-
-	public void setAbsences(Set<Absence> absences) {
-		this.absences = absences;
 	}
 
 }

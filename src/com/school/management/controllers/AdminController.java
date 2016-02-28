@@ -37,7 +37,7 @@ public class AdminController {
 		List<Teacher>allTeachers = courseService.getAllTeachers();
 		model.addAttribute("allTeachers", allTeachers);
 		
-		List<CourseRequest> allCourseRequests = courseService.getAllCourseRequests();
+		List<CourseRequest> allCourseRequests = courseService.allPendingRequests();
 		model.addAttribute("allCourseRequests", allCourseRequests);
 		
 		return "admin";
@@ -67,7 +67,7 @@ public class AdminController {
 		Long teacherId = Long.parseLong((String)requestData.get("teacherId"));
 		Long courseId = Long.parseLong((String)requestData.get("courseId"));
 		
-		courseService.addCourseToTeacher(teacherId, courseId);
+		courseService.assingCourseToTeacher(courseId, teacherId);
 		
 		return true;
 	}
@@ -77,8 +77,7 @@ public class AdminController {
 	public @ResponseBody boolean approveCourseRequest(@RequestBody Map<String, Object> requestData) {
 		
 		Long courseRequestId = Long.parseLong((String)requestData.get("courseRequestId"));
-			
-		useService.addCourseToStudent(courseRequestId);
+		useService.approveCourseRequest(courseRequestId);
 				
 		return true;
 	}

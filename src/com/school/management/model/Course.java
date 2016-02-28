@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import com.school.management.model.abstr.BaseEntity;
 
@@ -20,11 +20,11 @@ public class Course extends BaseEntity {
 	private String name;
 	private String code;
 	
-	@OneToOne
+	@ManyToOne     ///// IZMJENE syaviti many to one 
 	private Teacher teacher;
 	
-	@ManyToMany(mappedBy="attendingCourses", fetch=FetchType.EAGER)
-	private Set<Student> students;
+//	@ManyToMany(mappedBy="attendingCourses", fetch=FetchType.LAZY)
+//	private Set<Student> students;
 	
 	
 	public String getName() {
@@ -45,10 +45,10 @@ public class Course extends BaseEntity {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-	public Set<Student> getStudents() {
-		return students;
-	}
-	public void setStudents(Set<Student> students) {
-		this.students = students;
-	}
+//	public Set<Student> getStudents() {
+//		return students;
+//	}
+//	public void setStudents(Set<Student> students) {
+//		this.students = students;
+//	}
 }
