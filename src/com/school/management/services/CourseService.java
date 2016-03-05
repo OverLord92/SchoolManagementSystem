@@ -23,7 +23,7 @@ public interface CourseService {
 	
 	
 	
-	List<Course> getAllNeitherRequiredNorAttendedCourses(Student student);
+	List<Course> getAllNeitherRequestedNorAttendedCourses(Student student);
 	
 	Course getCourse(Long courseId);
 	

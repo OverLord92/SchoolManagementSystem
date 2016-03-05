@@ -1,8 +1,6 @@
 package com.school.management.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,51 +54,9 @@ public class CourseServiceImpl implements CourseService {
 
 
 	@Override
-	public List<Course> getAllNeitherRequiredNorAttendedCourses(Student student) {
-		List<Course> firstResult = new ArrayList<>();
-		
-		List<Course> allCourses = courseDao.getAll();
-		Set<Course> attendedCourses = student.getAttendingCourses();
-		
-		// filter already attending courses from all courses
-		boolean addCourse = true;
-		for(int i = 0; i < allCourses.size(); i++) {
-			
-			addCourse = true;
-			Course course = null;
-			for(Course attendedcourse: attendedCourses) {
-				course = allCourses.get(i);
-				if(attendedcourse.getId() == course.getId()){
-					addCourse = false;
-				}
-			}
-			
-			if(addCourse && course != null) {
-				firstResult.add(course);
-			}	
-		}
-		
-		if(attendedCourses.size() == 0) {
-			firstResult.addAll(allCourses);
-		}
-		
-		ArrayList<Course> endResult = new ArrayList<>();
-		// filter already requested courses from remained courses
-		Set<CourseRequest> courseRequests = student.getCourseRequests();
-		
-		// put all courseids of the courseRequest in a list
-		ArrayList<Long> courseRequestCourseIds = new ArrayList<>();
-		for(CourseRequest request: courseRequests) {
-			courseRequestCourseIds.add(request.getCourseId());
-		}
-		
-		for(Course course: firstResult) {
-			if(!courseRequestCourseIds.contains(course.getId())) {
-				endResult.add(course);
-			}
-		}
-		
-		return endResult;
+	public List<Course> getAllNeitherRequestedNorAttendedCourses(Student student) {
+		List<Course> result = courseDao.getAllNeitherRequestedNorAttendedCourses(student.getId());
+		return result;
 	}
 
 	@Override

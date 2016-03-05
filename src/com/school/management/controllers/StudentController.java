@@ -31,14 +31,16 @@ public class StudentController {
 	public String showAccount(Model model, Principal principal) {
 		
 		String username = principal.getName();
-		Student student = userService.getStudentByUsernameWithCourses(username);
+		Student student = userService.getStudentFullyInitializedByUsername(username);
 		
 		// get all requestable courses
-		List<Course>allAvailableCourses = courseService.getAllNeitherRequiredNorAttendedCourses(student);
+		List<Course>allAvailableCourses = courseService.getAllNeitherRequestedNorAttendedCourses(student);
 		model.addAttribute("allAvailableCourses", allAvailableCourses);
 		
 		model.addAttribute("attendingCourses", student.getAttendingCourses());
 		model.addAttribute("pendingRequests", student.getCourseRequests());
+		
+		model.addAttribute("loggedStudent", student);
 	
 		return "studentAccount";
 	}

@@ -17,13 +17,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.school.management.config.RootConfig;
-import com.school.management.config.WebAppInitializer;
-import com.school.management.config.WebConfig;
 import com.school.management.controllers.LoginAndRegisterController;
 import com.school.management.services.UserService;
 
@@ -52,7 +48,7 @@ public class LoginSpec {
 			.andExpect(view().name("home"));
 	}
 	
-	@Test()
+	@Test
 	public void shouldShowRegistrationPage() throws Exception {
 		mockMvc.perform(get("/register"))
 			.andExpect(view().name("registration"))

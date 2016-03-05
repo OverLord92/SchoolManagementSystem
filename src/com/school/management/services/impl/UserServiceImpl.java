@@ -108,12 +108,12 @@ public class UserServiceImpl implements UserService{
 		
 		studentDao.addCourseRequestToStudent(student, courseRequest);
 		
-		return false;
+		return true;
 	}
 
 	@Override
-	public Student getStudentByUsernameWithCourses(String username) {
-		return studentDao.getStudentWithCoursesAndRequests(username);
+	public Student getStudentFullyInitializedByUsername(String username) {
+		return studentDao.getStudentFullyInitializedByUsername(username);
 	}
 	
 	

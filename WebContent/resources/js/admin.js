@@ -32,6 +32,7 @@ $(document).ready(function(){
 		$.each(data, function() {
 			$.each(this, function(k, v) {
 				$('.availableCourses').append(
+						'click on the course name' +
 						'<div class="availableCourse" id="'  + v.id + '">' +		
 						v.name
 						+ '</div><br>'

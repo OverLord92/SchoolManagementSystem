@@ -1,7 +1,6 @@
 package com.school.management.dao.impl;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -97,21 +96,23 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 	}
 
 	@Override
-	public Student getStudentWithCoursesAndRequests(String username) {
+	public Student getStudentFullyInitializedByUsername(String username) {
 		Session session = sessionFactory.openSession();
 		Transaction txn = session.beginTransaction();
 		
-		Student student = getStudentByUsername(username);
-		Student mergedStudent = (Student)session.merge(student);
+		Criteria criteria = session.createCriteria(Student.class);
+		criteria.add(Restrictions.eq("username", username));
+		Student student = (Student)criteria.uniqueResult();
 		
-		Hibernate.initialize(mergedStudent.getAttendingCourses());
-		Hibernate.initialize(mergedStudent.getCourseRequests());
-		
-	
+		student.getAttendingCourses().size();
+		student.getCourseRequests().size();
+		student.getGrades();
+		student.getAbsences();
+
 		txn.commit();
 		session.close();
 		
-		return mergedStudent;
+		return student;
 	}
 
 

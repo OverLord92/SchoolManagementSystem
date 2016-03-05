@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,5 +70,26 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 		List<Student> result = query.list();
 	
 		return result;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Course> getAllNeitherRequestedNorAttendedCourses(Long studentId) {
+		String queryString = "SELECT c.* FROM course c " +
+				"WHERE id NOT IN ( " +
+				"SELECT courseId " +
+				"FROM courserequest " +
+				"WHERE studentId=:studentId" +
+				") AND id NOT IN ( " +
+				"SELECT courseId " +
+				"FROM student_course " +
+				"WHERE studentId=:studentId" +
+				")";
+		
+		Query query = getSession().createSQLQuery(queryString).addEntity(Course.class);
+				query.setParameter("studentId", studentId);
+		
+		return query.list();
 	}
 }

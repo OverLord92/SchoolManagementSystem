@@ -21,7 +21,6 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 	@Override
 	public boolean save(Teacher teacher) {
 		teacher.setEncodedPassword(encoder.encode(teacher.getRawPassword()));
-		teacher.setAuthority("TEACHER");
 		super.save(teacher);
 		return true;
 	}
@@ -29,7 +28,7 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 	@Override
 	public Teacher getTeacherByUsername(String username) {
 		Criteria criteria = getSession().createCriteria(Teacher.class);
-		criteria.add(Restrictions.eqOrIsNull("username", username));
+		criteria.add(Restrictions.eq("username", username));
 		return (Teacher)criteria.uniqueResult();
 	}
 

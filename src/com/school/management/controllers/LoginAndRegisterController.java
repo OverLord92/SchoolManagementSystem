@@ -45,6 +45,7 @@ public class LoginAndRegisterController {
 	public String registerTeacher(User user) {
 		Teacher teacher = new Teacher(user);
 		teacher.setEnabled(true);
+		teacher.setAuthority("TEACHER");
 		if(userService.saveTeacher(teacher)) {
 			System.out.println("teacher " + teacher);
 			return "redirect:/register";
@@ -56,7 +57,8 @@ public class LoginAndRegisterController {
 	@RequestMapping(value="/registerAdmin", method=RequestMethod.POST)
 	public String registerAdmin(User user) {
 		Admin admin = new Admin(user);
-		
+		admin.setEnabled(true);
+		admin.setAuthority("ADMIN");
 		if(userService.saveAdmin(admin)) {
 			return "redirect:/register";
 		} else {

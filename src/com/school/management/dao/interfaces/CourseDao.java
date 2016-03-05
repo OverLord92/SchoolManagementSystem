@@ -21,4 +21,6 @@ public interface CourseDao extends GenericDao<Long, Course>{
 	Set<Course> getTeachersCourses(Teacher teacher);
 
 	List<Student> getAllStudentsOfCourse(Long courseId);
+	
+	List<Course> getAllNeitherRequestedNorAttendedCourses(Long studentId);
 }

@@ -20,7 +20,7 @@ public interface StudentDao extends GenericDao<Long, Student>{
 	
 	void addAbsenceToStudent(Long studentId, Absence absence);
 	void addCourseRequestToStudent(Student student, CourseRequest courseRequst);
-	Student getStudentWithCoursesAndRequests(String username);
+	Student getStudentFullyInitializedByUsername(String username);
 
 
 	

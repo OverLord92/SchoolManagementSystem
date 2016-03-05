@@ -32,6 +32,6 @@ public interface UserService {
 	
 	Student getStudent(long id);
 	Student getStudentByUsername(String username);
-	Student getStudentByUsernameWithCourses(String username);
+	public Student getStudentFullyInitializedByUsername(String username);
 	
 }

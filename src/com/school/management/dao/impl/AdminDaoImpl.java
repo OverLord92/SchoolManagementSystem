@@ -16,4 +16,11 @@ public class AdminDaoImpl extends GenericDaoImpl<Long, Admin>
 		super(Admin.class);
 	}
 	
+	@Override
+	public boolean save(Admin admin) {
+		admin.setEncodedPassword(encoder.encode(admin.getRawPassword()));
+		super.save(admin);
+		return true;
+	}
+	
 }

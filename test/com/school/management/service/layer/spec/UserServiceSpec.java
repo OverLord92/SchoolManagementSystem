@@ -54,7 +54,7 @@ public class UserServiceSpec {
 	public void whenStudentRequestsCourseAddCourseTORequestedCourses() {
 		doReturn(student).when(studentDao).get(STUDENT_ID);
 		doReturn(course).when(courseDao).get(COURSE_ID);
-		userService.requestCourse(STUDENT_ID, COURSE_ID);
+//		userService.requestCourse(STUDENT_ID, COURSE_ID);
 	}
 	
 	@Test
