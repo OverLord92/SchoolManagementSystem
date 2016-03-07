@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.school.management.model.Course;
-import com.school.management.model.CourseRequest;
 import com.school.management.model.Student;
 import com.school.management.services.CourseService;
 import com.school.management.services.UserService;
@@ -33,6 +32,7 @@ public class StudentController {
 		String username = principal.getName();
 		Student student = userService.getStudentFullyInitializedByUsername(username);
 		
+		
 		// get all requestable courses
 		List<Course>allAvailableCourses = courseService.getAllNeitherRequestedNorAttendedCourses(student);
 		model.addAttribute("allAvailableCourses", allAvailableCourses);
@@ -41,7 +41,7 @@ public class StudentController {
 		model.addAttribute("pendingRequests", student.getCourseRequests());
 		
 		model.addAttribute("loggedStudent", student);
-	
+		
 		return "studentAccount";
 	}
 	

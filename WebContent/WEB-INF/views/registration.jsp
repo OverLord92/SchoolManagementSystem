@@ -18,22 +18,25 @@
 	<div class="col-md-4">
 	<h3>student form:</h3>
 	<c:url value="/registerStudent" var="saveStudent" />
-	<form:form modelAttribute="user" action="${saveStudent}" method="POST">
+	<form:form modelAttribute="student" action="${saveStudent}" method="POST">
 		<fieldset>
 		<div class="form-group">
 			<label for="username">username</label>
 			<form:input path="username"/>
+			<form:errors class="help-block" path="username" />
 		</div>		
 		<div class="form-group">
-			<label for="username">password</label>
+			<label for="rawPsssword">password</label>
 			<form:input path="rawPassword"/>
+			<form:errors class="help-block" path="rawPassword" />
 		</div>
 		<div class="form-group">
-			<label for="username">first name</label>
+			<label for="firstName">first name</label>
 			<form:input path="firstName"/>
+			<form:errors class="help-block" path="firstName" />
 		</div>
 		<div class="form-group">
-			<label for="username">last name</label>
+			<label for="lastName">last name</label>
 			<form:input path="lastName"/>
 		</div>
 		<input type="submit" value="Add Student">
@@ -44,23 +47,28 @@
 	<div class="col-md-4">
 	<h3>teacher form:</h3>
 	<c:url value="/registerTeacher" var="saveTeacher" />
-	<form:form modelAttribute="user" action="${saveTeacher}">
+	<form:form modelAttribute="teacher" action="${saveTeacher}">
 		<fieldset>
 		<div class="form-group">
 			<label for="username">username</label>
 			<form:input path="username"/>
+			<form:errors class="help-block" path="username" />
 		</div>		
 		<div class="form-group">
-			<label for="username">password</label>
+			<label for="rawPassword">password</label>
 			<form:input path="rawPassword"/>
+			<form:errors class="help-block" path="rawPassword" />
 		</div>
 		<div class="form-group">
-			<label for="username">first name</label>
+			<label for="firstName">first name</label>
 			<form:input path="firstName"/>
+			<form:errors class="help-block" path="firstName" />
 		</div>
 		<div class="form-group">
-			<label for="username">last name</label>
+			<label for="lastName">last name</label>
 			<form:input path="lastName"/>
+			<form:errors class="help-block" path="lastName" />
+			
 		</div>
 		<input type="submit" value="Add Teacher">
 		</fieldset>
@@ -70,23 +78,28 @@
 	<div class="col-md-4">
 	<h3>admin form:</h3>
 	<c:url value="/registerAdmin" var="saveAdmin" />
-	<form:form modelAttribute="user" action="${saveAdmin}">
+	<form:form modelAttribute="admin" action="${saveAdmin}">
 		<fieldset>
 		<div class="form-group">
 			<label for="username">username</label>
 			<form:input path="username"/>
+			<form:errors class="help-block" path="username" />
+			
 		</div>		
 		<div class="form-group">
-			<label for="username">password</label>
+			<label for="rawPassword">password</label>
 			<form:input path="rawPassword"/>
+			<form:errors class="help-block" path="rawPassword" />
 		</div>
 		<div class="form-group">
-			<label for="username">first name</label>
+			<label for="firstName">first name</label>
 			<form:input path="firstName"/>
+			<form:errors class="help-block" path="firstName" />
 		</div>
 		<div class="form-group">
-			<label for="username">last name</label>
+			<label for="lastName">last name</label>
 			<form:input path="lastName"/>
+			<form:errors class="help-block" path="lastName" />
 		</div>
 		<input type="submit" value="Add admin">
 		</fieldset>

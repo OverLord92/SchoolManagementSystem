@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -23,6 +24,7 @@ public class User extends BaseEntity {
 	private String encodedPassword;
 	private boolean enabled;
 	private String authority;
+	@Size(min = 0, max = 5)
 	private String firstName;
 	private String lastName;
 	public String getUsername() {

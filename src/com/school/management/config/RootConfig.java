@@ -1,7 +1,9 @@
 package com.school.management.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -12,4 +14,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 			   	   value=EnableWebMvc.class) })
 public class RootConfig {
 
+	@Bean
+	public ResourceBundleMessageSource messageSource(){
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("com.school.management.messages.messages");
+		return messageSource;
+	}
+	
 }

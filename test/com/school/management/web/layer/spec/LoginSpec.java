@@ -46,34 +46,38 @@ public class LoginSpec {
 	public void shouldShowHomePage() throws Exception {
 		mockMvc.perform(get("/"))
 			.andExpect(view().name("home"));
+		mockMvc.perform(get("/login"))
+		.andExpect(view().name("loginPage"));
 	}
 	
 	@Test
 	public void shouldShowRegistrationPage() throws Exception {
 		mockMvc.perform(get("/register"))
 			.andExpect(view().name("registration"))
-			.andExpect(model().attribute("user", notNullValue()));
+			.andExpect(model().attribute("student", notNullValue()))
+			.andExpect(model().attribute("teacher", notNullValue()))
+			.andExpect(model().attribute("admin", notNullValue()));
 	}
 	
 	@Test
 	public void shouldRegisterStudent() throws Exception {
 		doReturn(true).when(userService).saveStudent(any());
 		mockMvc.perform(post("/registerStudent"))
-			.andExpect(view().name("admin"));
+			.andExpect(view().name("redirect:/register"));
 	}
 	
 	@Test
 	public void shouldRegisterTeacher() throws Exception {
 		doReturn(true).when(userService).saveTeacher(any());
 		mockMvc.perform(post("/registerTeacher"))
-			.andExpect(view().name("admin"));
+			.andExpect(view().name("redirect:/register"));
 	}
 	
 	@Test
 	public void shouldRegisterAdmin() throws Exception {
 		doReturn(true).when(userService).saveAdmin(any());
 		mockMvc.perform(post("/registerAdmin"))
-			.andExpect(view().name("admin"));
+			.andExpect(view().name("redirect:/register"));
 		
 	}
 

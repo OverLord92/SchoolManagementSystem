@@ -71,7 +71,5 @@ public abstract class GenericDaoImpl<PK extends Serializable, T extends BaseEnti
 		Criteria criteria = getSession().createCriteria(persistentClass);
 		return criteria.list();
 	}
-
-	
 	
 }
