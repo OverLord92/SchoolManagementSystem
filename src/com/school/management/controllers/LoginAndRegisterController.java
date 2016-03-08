@@ -9,6 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.school.management.model.Admin;
 import com.school.management.model.Student;
@@ -16,10 +17,24 @@ import com.school.management.model.Teacher;
 import com.school.management.services.UserService;
 
 @Controller
+@SessionAttributes({ "student", "teacher", "admin" }) 
 public class LoginAndRegisterController {
 	
 	@Autowired
 	UserService userService;
+	
+	@ModelAttribute("student")
+	public Student prepareStudent() {
+		return new Student();
+	}
+	@ModelAttribute("teacher")
+	public Teacher prepareTeacher() {
+		return new Teacher();
+	}
+	@ModelAttribute("admin")
+	public Admin prepareAdmin() {
+		return new Admin();
+	}
 	
 	@RequestMapping("/")
 	public String showHome() {
@@ -41,17 +56,18 @@ public class LoginAndRegisterController {
 	
 
 	@RequestMapping(value="/registerStudent", method=RequestMethod.POST)
-	public String registerStudent(@Valid Student student, Errors errors, Model model) {
+	public String registerStudent(@Valid @ModelAttribute Student student, Errors errors, Model model) {
 		if(!errors.hasErrors()) {
 			student.setEnabled(true);
 			student.setAuthority("STUDENT");
 			userService.saveStudent(student);
 			return "redirect:/register";
-		} else { 
-			model.addAttribute("teacher", new Teacher());
-			model.addAttribute("admin", new Admin());
-			return "registration";
-		}
+		} 
+		
+		model.addAttribute("teacher", new Teacher());
+		model.addAttribute("admin", new Admin());
+		return "/registration";
+		
 	}
 	
 	@RequestMapping(value="/registerTeacher", method=RequestMethod.POST)
@@ -64,7 +80,7 @@ public class LoginAndRegisterController {
 		} else {
 			model.addAttribute("student", new Student());
 			model.addAttribute("admin", new Admin());
-			return "registration";
+			return "/registration";
 		}
 	}
 	
@@ -78,7 +94,7 @@ public class LoginAndRegisterController {
 		} else {
 			model.addAttribute("student", new Student());
 			model.addAttribute("teacher", new Teacher());
-			return "registration";
+			return "/registration"; 
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class CourseServiceImpl implements CourseService {
 		
 		course.setTeacher(teacher);
 		courseDao.update(course);
-		return false;
+		return true;
 	}
 
 

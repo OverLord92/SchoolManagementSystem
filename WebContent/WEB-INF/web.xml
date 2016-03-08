@@ -18,7 +18,7 @@
 
 	<error-page>
 		<error-code>500</error-code>
-		<location>/internalServerException</location>
+		<location>/defaultErrorPage</location>
 	</error-page>
 
 </web-app>

@@ -3,6 +3,7 @@ package com.school.management.web.layer.spec;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -16,12 +17,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.school.management.config.RootConfig;
 import com.school.management.controllers.LoginAndRegisterController;
+import com.school.management.model.Admin;
+import com.school.management.model.Student;
+import com.school.management.model.Teacher;
 import com.school.management.services.UserService;
+import com.school.management.test.util.TestUtil;
 
 @RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes={ RootConfig.class })
@@ -39,7 +45,8 @@ public class LoginSpec {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		this.mockMvc = standaloneSetup(controller).build();
+		mockMvc = standaloneSetup(controller).build();
+		reset(userService);
 	}
 	
 	@Test
@@ -67,10 +74,38 @@ public class LoginSpec {
 	}
 	
 	@Test
+	public void shouldNotRegisterStudent() throws Exception {
+		
+		Student student = new Student();
+		student.setFirstName(TestUtil.createStringOfCertainLength(6));
+		
+		mockMvc.perform(post("/registerStudent")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
+				.sessionAttr("student", student)
+				)//.andDo(MockMvcResultHandlers.print())
+			.andExpect(view().name("/registration"));
+	}
+	
+	@Test
 	public void shouldRegisterTeacher() throws Exception {
 		doReturn(true).when(userService).saveTeacher(any());
 		mockMvc.perform(post("/registerTeacher"))
 			.andExpect(view().name("redirect:/register"));
+	}
+	
+	@Test
+	public void shouldNotRegisterTeacher() throws Exception {
+		
+		Teacher teacher = new Teacher();
+		teacher.setFirstName("duze nego dozvoljeno");
+		
+		mockMvc.perform(post("/registerTeacher")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
+				.sessionAttr("teacher", teacher)
+				)//.andDo(MockMvcResultHandlers.print())
+			.andExpect(view().name("/registration"));
 	}
 	
 	@Test
@@ -79,6 +114,20 @@ public class LoginSpec {
 		mockMvc.perform(post("/registerAdmin"))
 			.andExpect(view().name("redirect:/register"));
 		
+	}
+	
+	@Test
+	public void shouldNotRegisterAdmin() throws Exception {
+		
+		Admin admin = new Admin();
+		admin.setFirstName("duze nego dozvoljeno");
+		
+		mockMvc.perform(post("/registerAdmin")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
+				.sessionAttr("admin", admin)
+				)//.andDo(MockMvcResultHandlers.print())
+			.andExpect(view().name("/registration"));
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.school.management.config;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +23,19 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 @ComponentScan("com.school.management.controllers")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+	@Bean
+	public SimpleMappingExceptionResolver exeptionResolver() {
+		SimpleMappingExceptionResolver exceptionResolver 
+			= new SimpleMappingExceptionResolver();
+		
+		Properties exceptionMappings = new Properties();
+		exceptionMappings.put("java.lang.Exception", "errorPages/defaultErrorPage");
+		exceptionResolver.setExceptionMappings(exceptionMappings);
+		
+		return exceptionResolver;
+	}
+	
+	
 	@Bean
 	public ViewResolver viewResolver(){
 		InternalResourceViewResolver resolver =
