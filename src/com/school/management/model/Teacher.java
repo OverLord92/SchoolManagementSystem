@@ -12,9 +12,6 @@ public class Teacher extends User {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-//	@OneToMany(mappedBy="teacher", cascade=CascadeType.ALL) /// izbaciti
-//	private Set<Course> courses;
-	
 	public Teacher() {
 	}
 	
@@ -27,17 +24,4 @@ public class Teacher extends User {
 		this.setLastName(user.getLastName());
 	}
 	
-	
-//	public Set<Course> getCourses() {
-//		return courses;
-//	}
-//
-//	public void setCourses(Set<Course> courses) {
-//		this.courses = courses;
-//	}
-//
-//	public void addCourse(Course course) {
-//		courses.add(course);
-//	}
-
 }

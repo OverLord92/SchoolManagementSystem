@@ -20,12 +20,8 @@ public class Course extends BaseEntity {
 	private String name;
 	private String code;
 	
-	@ManyToOne     ///// IZMJENE syaviti many to one 
+	@ManyToOne    
 	private Teacher teacher;
-	
-//	@ManyToMany(mappedBy="attendingCourses", fetch=FetchType.LAZY)
-//	private Set<Student> students;
-	
 	
 	public String getName() {
 		return name;
@@ -45,10 +41,5 @@ public class Course extends BaseEntity {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-//	public Set<Student> getStudents() {
-//		return students;
-//	}
-//	public void setStudents(Set<Student> students) {
-//		this.students = students;
-//	}
+
 }

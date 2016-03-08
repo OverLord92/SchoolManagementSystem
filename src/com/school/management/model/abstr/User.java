@@ -5,7 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -16,17 +19,33 @@ public class User extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank
+	@Size(min = 5, max = 10)
+	@Pattern(regexp = "^\\w{5,10}$")
 	private String username;
 	
 	@Transient
+	@NotBlank
+	@Size(min = 5, max = 10)
+	@Pattern(regexp = "^\\w{5,10}$")
 	private String rawPassword;
+	
 	@Column(name="password")
 	private String encodedPassword;
+	
 	private boolean enabled;
 	private String authority;
-	@Size(min = 0, max = 5)
+	
+	@NotBlank
+	@Size(min = 3, max = 20)
+	@Pattern(regexp = "^[A-Z][a-z]{4,20}$")
 	private String firstName;
+	
+	@NotBlank
+	@Size(min = 3, max = 20)
+	@Pattern(regexp = "^[A-Z][a-z]{4,20}$")
 	private String lastName;
+	
 	public String getUsername() {
 		return username;
 	}
