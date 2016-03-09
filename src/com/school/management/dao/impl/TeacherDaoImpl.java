@@ -18,6 +18,7 @@ public class TeacherDaoImpl extends GenericDaoImpl<Long, Teacher>
 		super(Teacher.class);
 	}
 	
+	/** Sets encoded password and saves teacher */
 	@Override
 	public boolean save(Teacher teacher) {
 		teacher.setEncodedPassword(encoder.encode(teacher.getRawPassword()));

@@ -58,10 +58,10 @@ public class LoginAndRegisterController {
 	
 	@RequestMapping("checkUsernameAvailability")
 	public @ResponseBody boolean isUsernameAvaiable(@RequestParam String username) {
-	
 		return userService.isUsernameAvaiable(username);
 	}
 	
+	/** Handles student registration form */
 	@RequestMapping(value="/registerStudent", method=RequestMethod.POST)
 	public String registerStudent(@Valid @ModelAttribute Student student, Errors errors, Model model) {
 		
@@ -77,12 +77,15 @@ public class LoginAndRegisterController {
 			return "redirect:/register";
 		} 
 		
+		// adds attributes to the model if the validation fails
+		// the attributes are needed as modelAttributes in the spring forms
 		model.addAttribute("teacher", new Teacher());
 		model.addAttribute("admin", new Admin());
 		return "/registration";
 		
 	}
 	
+	/** Handles teacher registration form */
 	@RequestMapping(value="/registerTeacher", method=RequestMethod.POST)
 	public String registerTeacher(@Valid Teacher teacher, Errors errors, Model model) {
 		if(!errors.hasErrors()) {
@@ -90,13 +93,17 @@ public class LoginAndRegisterController {
 			teacher.setAuthority("TEACHER");
 			userService.saveTeacher(teacher);
 			return "redirect:/register";
-		} else {
-			model.addAttribute("student", new Student());
-			model.addAttribute("admin", new Admin());
-			return "/registration";
-		}
+		} 
+		
+		// adds attributes to the model if the validation fails
+		// the attributes are needed as modelAttributes in the spring forms
+		model.addAttribute("student", new Student());
+		model.addAttribute("admin", new Admin());
+		return "/registration";
+		
 	}
 	
+	/** Handles administrator registration form */
 	@RequestMapping(value="/registerAdmin", method=RequestMethod.POST)
 	public String registerAdmin(@Valid Admin admin, Errors errors, Model model) {
 		if(!errors.hasErrors()) {
@@ -104,11 +111,13 @@ public class LoginAndRegisterController {
 			admin.setAuthority("ADMIN");
 			userService.saveAdmin(admin);
 			return "redirect:/register";
-		} else {
-			model.addAttribute("student", new Student());
-			model.addAttribute("teacher", new Teacher());
-			return "/registration"; 
-		}
+		} 
+		
+		// adds attributes to the model if the validation fails
+		// the attributes are needed as modelAttributes in the spring forms
+		model.addAttribute("student", new Student());
+		model.addAttribute("teacher", new Teacher());
+		return "/registration"; 
 	}
 }
 

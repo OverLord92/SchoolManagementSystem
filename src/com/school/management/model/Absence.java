@@ -3,6 +3,8 @@ package com.school.management.model;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+/** Represents a students absence from a class. 
+ *  Embedded in the Student class */
 @Embeddable 
 public class Absence {
 
@@ -10,8 +12,12 @@ public class Absence {
 	private Course course;
 	
 	private boolean justified;
+	
+	// the teacher can define a comment for the absence
 	private String comment;
 	
+	
+	// plain getters and setters
 	public Course getCourse() {
 		return course;
 	}

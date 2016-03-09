@@ -26,6 +26,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 	}
 
 	
+	/** Returns all classes which don't have an assigned teacher */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> getFreeCourses() {
@@ -37,6 +38,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 	}
 
 
+	/** Returns all requests from the students */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CourseRequest> getAllPendingRequests() {
@@ -46,7 +48,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 		return query.list();
 	}
 
-
+	/** Returns all courses of requested teacher */
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<Course> getTeachersCourses(Teacher teacher) {
@@ -56,6 +58,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 	}
 
 
+	/** Returns all students who attend the course with the id courseId */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Student> getAllStudentsOfCourse(Long courseId) {
@@ -73,6 +76,10 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 	}
 
 
+	/** Returns all courses which user with studentId can request
+	 * excluding: 
+	 * 		all already requested courses
+	 * 		all already attending courses */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Course> getAllNeitherRequestedNorAttendedCourses(Long studentId) {

@@ -17,9 +17,6 @@ $(document).ready(function(){
 		$.ajax({
 			type: 'POST',
 			url: 'getCoursesWithoutTeachers', 
-			data: JSON.stringify({
-				teacherId: choosenTeacher
-			}),
 			accept: 'application/json',
 			success: getCoursesSuccess,
 			error: getCoursesError,

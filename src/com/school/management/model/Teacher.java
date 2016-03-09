@@ -6,15 +6,16 @@ import com.school.management.model.abstr.User;
 
 @Entity
 public class Teacher extends User {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	
 	public Teacher() {
 	}
 	
+	/** 
+	 * Constructor which wraps user object into a Teacher object.
+	 *  Is currently not used, but could be useful in future development.
+	 */
 	public Teacher(User user) {
 		this();
 		this.setId(user.getId());

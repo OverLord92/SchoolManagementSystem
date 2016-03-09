@@ -15,6 +15,8 @@ import com.school.management.model.CourseRequest;
 import com.school.management.model.Grade;
 import com.school.management.model.Student;
 
+/** This class was coded a little bit defensively 
+ * with explicitly defined transactions boundaries */
 @Transactional
 @Repository
 public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements StudentDao {
@@ -23,6 +25,7 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		super(Student.class);
 	}
 	
+	/** Sets encoded password and saves student */
 	@Override
 	public boolean save(Student student) {
 		student.setEncodedPassword(encoder.encode(student.getRawPassword()));
@@ -37,6 +40,8 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		return (Student)criteria.uniqueResult();
 	}
 
+	/** Approves students request for attending a course,
+	 * 		deletes request and adds the course to students courses*/
 	@Override
 	public boolean approveCourseRequest(Long courseRequstId) {
 		Session session = sessionFactory.openSession();
@@ -57,6 +62,7 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		return true;
 	}
 	
+	/** Adds absence to student */
 	@Override
 	public void addAbsenceToStudent(Long studentId, Absence absence) {
 		Session session = sessionFactory.openSession();
@@ -69,6 +75,7 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		session.close();
 	}
 
+	/** Adds grade to student */
 	@Override
 	public void addGradeToStudent(Long studentId, Grade grade) {
 		Session session = sessionFactory.openSession();
@@ -81,6 +88,7 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		session.close();
 	}
 
+	/** Adds courseRequest to students requests */
 	@Override
 	public void addCourseRequestToStudent(Student student, CourseRequest courseRequst) {
 		Session session = sessionFactory.openSession();
@@ -95,6 +103,8 @@ public class StudentDaoImpl extends GenericDaoImpl<Long, Student> implements Stu
 		session.close();
 	}
 
+	/** Returns student with all his collections.
+	 * 		This method is used when showing students account */
 	@Override
 	public Student getStudentFullyInitializedByUsername(String username) {
 		Session session = sessionFactory.openSession();

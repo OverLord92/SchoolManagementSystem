@@ -43,8 +43,9 @@ public class TeacherController {
 		return "teacherAccount";
 	}
 	
+	/** Returns all students who attend the course with the id courseId */
 	@RequestMapping(value="/getStudentsCourse/{courseId}", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody Map<String, Object> getCourseStudents(@PathVariable Long courseId) {
+	public @ResponseBody Map<String, Object> getStudentsWhoAttendThisCourse(@PathVariable Long courseId) {
 		
 		Map<String, Object> resultData = new HashMap<>();
 		
@@ -54,8 +55,9 @@ public class TeacherController {
 		return resultData;
 	}
 	
+	/** Handles dynamically generated form for adding absences */
 	@RequestMapping(value="/addAbsenceToUser", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody boolean addAbsenceToUser(@RequestBody Map<String, Object> requestData) {
+	public @ResponseBody boolean addAbsenceToStudent(@RequestBody Map<String, Object> requestData) {
 		
 		Long studentId = Long.parseLong((String)requestData.get("studentId"));
 		Long courseId = Long.parseLong((String)requestData.get("courseId"));
@@ -74,8 +76,9 @@ public class TeacherController {
 		return true;
 	}
 	
+	/** Handles dynamically generated form for adding grades */
 	@RequestMapping(value="/addGradeToUser", method=RequestMethod.POST, consumes="application/json")
-	public @ResponseBody boolean addGradeToUser(@RequestBody Map<String, Object> requestData) {
+	public @ResponseBody boolean addGradeToStudent(@RequestBody Map<String, Object> requestData) {
 		
 		Long studentId = Long.parseLong((String)requestData.get("studentId"));
 		Long courseId = Long.parseLong((String)requestData.get("courseId"));

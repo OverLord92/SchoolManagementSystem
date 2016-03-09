@@ -27,13 +27,13 @@ public class StudentController {
 	
 	
 	@RequestMapping("/studentAccount")
-	public String showAccount(Model model, Principal principal) {
+	public String showStudentAccount(Model model, Principal principal) {
 		
 		String username = principal.getName();
 		Student student = userService.getStudentFullyInitializedByUsername(username);
 		
-		
-		// get all requestable courses
+		// get all courses witch can be requested 
+		// (excluding attending courses and already requested courses)
 		List<Course>allAvailableCourses = courseService.getAllNeitherRequestedNorAttendedCourses(student);
 		model.addAttribute("allAvailableCourses", allAvailableCourses);
 		

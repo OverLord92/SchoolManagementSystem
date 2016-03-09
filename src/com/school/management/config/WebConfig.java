@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -25,7 +24,29 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 @EnableWebMvc
 @ComponentScan("com.school.management.controllers")
 public class WebConfig extends WebMvcConfigurerAdapter {
+	
+	@Bean
+	public ViewResolver viewResolver(){
+		InternalResourceViewResolver resolver =
+				new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		resolver.setExposeContextBeansAsAttributes(true);  
+		return resolver;
+	}
 
+	@Bean
+	public SimpleMappingExceptionResolver exeptionResolver() {
+		SimpleMappingExceptionResolver exceptionResolver 
+		= new SimpleMappingExceptionResolver();
+		
+		Properties exceptionMappings = new Properties();
+		exceptionMappings.put("java.lang.Exception", "errorPages/defaultErrorPage");
+		exceptionResolver.setExceptionMappings(exceptionMappings);
+		
+		return exceptionResolver;
+	}
+	
 	@Bean
 	public ResourceBundleMessageSource messageSource(){
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
@@ -37,29 +58,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(
 			DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();                               
-	}
-	
-	@Bean
-	public SimpleMappingExceptionResolver exeptionResolver() {
-		SimpleMappingExceptionResolver exceptionResolver 
-			= new SimpleMappingExceptionResolver();
-		
-		Properties exceptionMappings = new Properties();
-		exceptionMappings.put("java.lang.Exception", "errorPages/defaultErrorPage");
-		exceptionResolver.setExceptionMappings(exceptionMappings);
-		
-		return exceptionResolver;
-	}
-	
-	
-	@Bean
-	public ViewResolver viewResolver(){
-		InternalResourceViewResolver resolver =
-				new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
-		resolver.setExposeContextBeansAsAttributes(true);  
-		return resolver;
 	}
 	
 	@Override

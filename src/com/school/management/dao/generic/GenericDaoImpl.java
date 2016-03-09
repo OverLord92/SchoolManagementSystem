@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.school.management.model.abstr.BaseEntity;
 
+/** Handles all operations which are common for all entity classes */
 @Transactional
 public abstract class GenericDaoImpl<PK extends Serializable, T extends BaseEntity> 
 	implements GenericDao<PK, T> {

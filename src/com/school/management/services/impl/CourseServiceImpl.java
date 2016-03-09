@@ -70,12 +70,6 @@ public class CourseServiceImpl implements CourseService {
 		return teacherDao.getAll();
 	}
 
-
-	@Override
-	public void updateTeacher(Teacher teacher) {
-		teacherDao.update(teacher);
-	}
-
 	@Override
 	public List<CourseRequest> allPendingRequests() {
 		return courseDao.getAllPendingRequests();

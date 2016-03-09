@@ -29,10 +29,5 @@ public interface CourseService {
 	
 	
 	List<Teacher> getAllTeachers();
-	
-	
-	void updateTeacher(Teacher teacher);
-	
 
-	
 }

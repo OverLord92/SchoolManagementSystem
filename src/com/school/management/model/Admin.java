@@ -4,17 +4,19 @@ import javax.persistence.Entity;
 
 import com.school.management.model.abstr.User;
 
+/** Represents the administrator of the System */
 @Entity
 public class Admin extends User {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	public Admin() {
 	}
 	
+	/** 
+	 * Constructor which wraps user object into a Admin object.
+	 *  Is currently not used, but could be useful in future development.
+	 */
 	public Admin(User user) {
 		this.setId(user.getId());
 		this.setUsername(user.getUsername());

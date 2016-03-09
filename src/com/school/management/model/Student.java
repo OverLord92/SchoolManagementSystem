@@ -1,6 +1,5 @@
 package com.school.management.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,9 +16,6 @@ import com.school.management.model.abstr.User;
 @Entity
 public class Student extends User {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
@@ -40,10 +36,12 @@ public class Student extends User {
 	private Set<Course> attendingCourses;
 	
 	public Student() {
-		grades = new HashSet<>();
-		absences = new HashSet<>();
 	}
 	
+	/** 
+	 * Constructor which wraps user object into a Student object.
+	 *  Is currently not used, but could be useful in future development.
+	 */
 	public Student(User user) {
 		this();
 		this.setId(user.getId());

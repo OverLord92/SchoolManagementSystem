@@ -4,14 +4,21 @@ import javax.persistence.Entity;
 
 import com.school.management.model.abstr.BaseEntity;
 
+/** Student is able to request to attend a course.
+ *  This class represents the course requests of students. */
 @Entity
 public class CourseRequest extends BaseEntity {
 	
+	private static final long serialVersionUID = 1L;
+	
+	// id and username of the student who made the request
 	private Long studentId;
 	private String studentUsername;
 	
+	// id and name of the requested course
 	private Long courseId;
 	private String courseName;
+	
 	
 	
 	public Long getStudentId() {

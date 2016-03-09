@@ -43,15 +43,17 @@ public class AdminController {
 		return "admin";
 	}
 	
+	/** Handles form for adding new courses */
 	@RequestMapping(value="/addCourse", method=RequestMethod.POST)
 	public String addNewCourse(Course course) {
 		courseService.addNewCourse(course);
 		return "redirect:/adminPage";
 	}
 		
+	/** Returns all courses which have no assigned teacher */
 	@RequestMapping(value="getCoursesWithoutTeachers", method=RequestMethod.POST, 
 			produces="application/json")
-	public @ResponseBody Map<String, Object> getAllFreeCourses(@RequestBody Map<String, Object> requestData) {
+	public @ResponseBody Map<String, Object> getAllCoursesWithNoAssignedTeacher() {
 		
 		List<Course> allFreeCourses = courseService.getAllFreeCourses();  
 		
@@ -61,9 +63,11 @@ public class AdminController {
 		return resultData;
 	}
 	
+	/** Takes a teacherId and courseId and assigns the teacher to the course */
 	@RequestMapping(value="assignCourseToTeacher", method=RequestMethod.POST, 
 			consumes="application/json", produces="application/json")
 	public @ResponseBody boolean assignCourseToTeacher(@RequestBody Map<String, Object> requestData) {
+		
 		Long teacherId = Long.parseLong((String)requestData.get("teacherId"));
 		Long courseId = Long.parseLong((String)requestData.get("courseId"));
 		
@@ -72,6 +76,7 @@ public class AdminController {
 		return true;
 	}
 	
+	/** Approves a students request to attend a course */
 	@RequestMapping(value="approveCourserequest", method=RequestMethod.POST, 
 			consumes="application/json")
 	public @ResponseBody boolean approveCourseRequest(@RequestBody Map<String, Object> requestData) {
@@ -81,16 +86,6 @@ public class AdminController {
 				
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
 

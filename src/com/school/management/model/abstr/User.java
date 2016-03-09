@@ -10,13 +10,12 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+/** Student, Teacher and Admin classes extends this classes.
+ *  Holds common data for all this classes. */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class User extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank
@@ -30,6 +29,7 @@ public class User extends BaseEntity {
 	@Pattern(regexp = "^\\w{5,10}$")
 	private String rawPassword;
 	
+	// password is encoded before the user object is persisted
 	@Column(name="password")
 	private String encodedPassword;
 	
@@ -45,6 +45,8 @@ public class User extends BaseEntity {
 	@Size(min = 3, max = 20)
 	@Pattern(regexp = "^[A-Z][a-z]{4,20}$")
 	private String lastName;
+	
+	
 	
 	public String getUsername() {
 		return username;

@@ -3,6 +3,8 @@ package com.school.management.model;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+/** Represents a students grade for a class. 
+ *  Embedded in the Student class */
 @Embeddable  
 public class Grade  {
 
@@ -10,6 +12,7 @@ public class Grade  {
 	private Course course;
 	
 	private int grade;
+	
 	
 	public Course getCourse() {
 		return course;

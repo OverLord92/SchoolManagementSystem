@@ -19,6 +19,7 @@ public class AdminDaoImpl extends GenericDaoImpl<Long, Admin>
 		super(Admin.class);
 	}
 	
+	/** Sets encoded password and saves administrator */
 	@Override
 	public boolean save(Admin admin) {
 		admin.setEncodedPassword(encoder.encode(admin.getRawPassword()));
@@ -26,6 +27,7 @@ public class AdminDaoImpl extends GenericDaoImpl<Long, Admin>
 		return true;
 	}
 
+	/** Checks is the requested username is avaialble */
 	@Override
 	public boolean isUsernameAvaiable(String username) {
 		Query query = getSession().createSQLQuery("SELECT username FROM user");
@@ -33,9 +35,6 @@ public class AdminDaoImpl extends GenericDaoImpl<Long, Admin>
 		@SuppressWarnings("unchecked")
 		List<String> allUsernames= query.list();
 		
-		for(String strUser: allUsernames)
-			System.out.println(strUser);
-				
 		return !allUsernames.contains(username);
 	}
 	
