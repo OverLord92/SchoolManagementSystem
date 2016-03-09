@@ -10,6 +10,10 @@
 	type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>user registration</title>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/jquery.core.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/js/register.js"/>"></script>
 </head>
 <body>
 <jsp:include page="../jspFragments/header.jsp" />
@@ -22,7 +26,8 @@
 		<fieldset>
 		<div class="form-group">
 			<label for="username">username</label>
-			<form:input path="username"/>
+			<form:input path="username" class="username" />
+			<span class="usernameAvailability"></span>
 			<form:errors class="help-block" path="username" />
 		</div>		
 		<div class="form-group">
@@ -51,7 +56,8 @@
 		<fieldset>
 		<div class="form-group">
 			<label for="username">username</label>
-			<form:input path="username"/>
+			<form:input path="username" class="username"/>
+			<span class="usernameAvailability"></span>
 			<form:errors class="help-block" path="username" />
 		</div>		
 		<div class="form-group">
@@ -82,7 +88,8 @@
 		<fieldset>
 		<div class="form-group">
 			<label for="username">username</label>
-			<form:input path="username"/>
+			<form:input path="username" class="username"/>
+			<span class="usernameAvailability"></span>
 			<form:errors class="help-block" path="username" />
 			
 		</div>		

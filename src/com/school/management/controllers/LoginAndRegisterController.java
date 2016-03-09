@@ -9,6 +9,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.school.management.model.Admin;
@@ -54,9 +56,20 @@ public class LoginAndRegisterController {
 		return "registration";
 	}
 	
-
+	@RequestMapping("checkUsernameAvailability")
+	public @ResponseBody boolean isUsernameAvaiable(@RequestParam String username) {
+	
+		return userService.isUsernameAvaiable(username);
+	}
+	
 	@RequestMapping(value="/registerStudent", method=RequestMethod.POST)
 	public String registerStudent(@Valid @ModelAttribute Student student, Errors errors, Model model) {
+		
+		if(!userService.isUsernameAvaiable(student.getUsername())){
+			errors.reject("username", "DuplicateKey.user.username");
+			return "/registration";
+		}
+		
 		if(!errors.hasErrors()) {
 			student.setEnabled(true);
 			student.setAuthority("STUDENT");

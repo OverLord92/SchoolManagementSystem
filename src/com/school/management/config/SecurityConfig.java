@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/getCoursesWithoutTeachers").hasRole("ADMIN")
 				.antMatchers("/assignCourseToTeacher").hasRole("ADMIN")
 				.antMatchers("/approveCourserequest").hasRole("ADMIN")
+				.antMatchers("/checkUsernameAvailability").hasRole("ADMIN")
 				.antMatchers("/errorPages/*").permitAll()
 				.anyRequest().denyAll()
 			.and()

@@ -34,4 +34,6 @@ public interface UserService {
 	Student getStudentByUsername(String username);
 	public Student getStudentFullyInitializedByUsername(String username);
 	
+	boolean isUsernameAvaiable(String username);
+	
 }

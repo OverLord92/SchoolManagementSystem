@@ -1,5 +1,8 @@
 package com.school.management.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,19 @@ public class AdminDaoImpl extends GenericDaoImpl<Long, Admin>
 		admin.setEncodedPassword(encoder.encode(admin.getRawPassword()));
 		super.save(admin);
 		return true;
+	}
+
+	@Override
+	public boolean isUsernameAvaiable(String username) {
+		Query query = getSession().createSQLQuery("SELECT username FROM user");
+		
+		@SuppressWarnings("unchecked")
+		List<String> allUsernames= query.list();
+		
+		for(String strUser: allUsernames)
+			System.out.println(strUser);
+				
+		return !allUsernames.contains(username);
 	}
 	
 }

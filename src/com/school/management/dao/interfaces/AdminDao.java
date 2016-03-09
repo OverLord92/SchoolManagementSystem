@@ -8,4 +8,6 @@ import com.school.management.model.Admin;
 @Repository
 public interface AdminDao extends GenericDao<Long, Admin> {
 
+	boolean isUsernameAvaiable(String username);
+
 }

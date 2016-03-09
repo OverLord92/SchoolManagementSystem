@@ -115,6 +115,13 @@ public class UserServiceImpl implements UserService{
 	public Student getStudentFullyInitializedByUsername(String username) {
 		return studentDao.getStudentFullyInitializedByUsername(username);
 	}
+
+	@Override
+	public boolean isUsernameAvaiable(String username) {
+		
+		return adminDao.isUsernameAvaiable(username);
+		
+	}
 	
 	
 	
