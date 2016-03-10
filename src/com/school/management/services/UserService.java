@@ -17,23 +17,23 @@ public interface UserService {
 	// admin methods
 	boolean saveAdmin(Admin admin);
 	boolean approveCourseRequest(Long courseRequstId);
+	boolean isUsernameAvaiable(String username);
 	
 	// teacher methods
 	boolean saveTeacher(Teacher teeacher);
-	public boolean updateStudent(Student student);
 	Teacher getTeacherByUsername(String username);
-	
-	boolean addAbsence(Long studentId, Absence absence);
-	boolean addGrade(Long studentId, Grade grade);
 	Set<Course> getTeachersCourses(Teacher teacher);
 	
-	boolean saveStudent(Student student);
-	boolean requestCourse(Student student, Long courseId);
-	
+	// student methods
 	Student getStudent(long id);
 	Student getStudentByUsername(String username);
-	public Student getStudentFullyInitializedByUsername(String username);
+	Student getStudentFullyInitializedByUsername(String username);
+	boolean saveStudent(Student student);
+	boolean requestCourse(Student student, Long courseId);
+	boolean addAbsence(Long studentId, Absence absence);
+	boolean addGrade(Long studentId, Grade grade);
 	
-	boolean isUsernameAvaiable(String username);
+	
+	
 	
 }

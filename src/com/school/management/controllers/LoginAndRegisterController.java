@@ -66,7 +66,7 @@ public class LoginAndRegisterController {
 	public String registerStudent(@Valid @ModelAttribute Student student, Errors errors, Model model) {
 		
 		if(!userService.isUsernameAvaiable(student.getUsername())){
-			errors.reject("username", "DuplicateKey.user.username");
+			errors.reject("username", "Username is not available");
 			return "/registration";
 		}
 		
@@ -77,10 +77,6 @@ public class LoginAndRegisterController {
 			return "redirect:/register";
 		} 
 		
-		// adds attributes to the model if the validation fails
-		// the attributes are needed as modelAttributes in the spring forms
-		model.addAttribute("teacher", new Teacher());
-		model.addAttribute("admin", new Admin());
 		return "/registration";
 		
 	}
@@ -88,6 +84,12 @@ public class LoginAndRegisterController {
 	/** Handles teacher registration form */
 	@RequestMapping(value="/registerTeacher", method=RequestMethod.POST)
 	public String registerTeacher(@Valid Teacher teacher, Errors errors, Model model) {
+		
+		if(!userService.isUsernameAvaiable(teacher.getUsername())){
+			errors.reject("username", "DuplicateKey.user.username");
+			return "/registration";
+		}
+		
 		if(!errors.hasErrors()) {
 			teacher.setEnabled(true);
 			teacher.setAuthority("TEACHER");
@@ -95,10 +97,6 @@ public class LoginAndRegisterController {
 			return "redirect:/register";
 		} 
 		
-		// adds attributes to the model if the validation fails
-		// the attributes are needed as modelAttributes in the spring forms
-		model.addAttribute("student", new Student());
-		model.addAttribute("admin", new Admin());
 		return "/registration";
 		
 	}
@@ -106,6 +104,12 @@ public class LoginAndRegisterController {
 	/** Handles administrator registration form */
 	@RequestMapping(value="/registerAdmin", method=RequestMethod.POST)
 	public String registerAdmin(@Valid Admin admin, Errors errors, Model model) {
+		
+		if(!userService.isUsernameAvaiable(admin.getUsername())){
+			errors.reject("username", "DuplicateKey.user.username");
+			return "/registration";
+		}
+		
 		if(!errors.hasErrors()) {
 			admin.setEnabled(true);
 			admin.setAuthority("ADMIN");
@@ -113,10 +117,6 @@ public class LoginAndRegisterController {
 			return "redirect:/register";
 		} 
 		
-		// adds attributes to the model if the validation fails
-		// the attributes are needed as modelAttributes in the spring forms
-		model.addAttribute("student", new Student());
-		model.addAttribute("teacher", new Teacher());
 		return "/registration"; 
 	}
 }

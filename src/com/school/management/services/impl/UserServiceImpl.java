@@ -33,41 +33,41 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	CourseDao courseDao;
 	
-	@Override
-	public boolean saveStudent(Student student) {
-		studentDao.save(student);
-		return true;
-	}
-
-	@Override
-	public boolean saveTeacher(Teacher teacher) {
-		teacherDao.save(teacher);
-		return true;
-	}
 
 	@Override
 	public boolean saveAdmin(Admin admin) {
 		adminDao.save(admin);
 		return true;
 	}
-
+	
 	@Override
-	public boolean addAbsence(Long studentId, Absence absence) {
-		studentDao.addAbsenceToStudent(studentId, absence);
+	public boolean approveCourseRequest(Long courseRequestId) {
+		studentDao.approveCourseRequest(courseRequestId);
 		return true;
 	}
-
+	
 	@Override
-	public boolean addGrade(Long studentId, Grade grade) {
-		studentDao.addGradeToStudent(studentId, grade);
+	public boolean isUsernameAvaiable(String username) {
+		return adminDao.isUsernameAvaiable(username);
+	}
+	
+	
+	@Override
+	public boolean saveTeacher(Teacher teacher) {
+		teacherDao.save(teacher);
 		return true;
 	}
-
+	
 	@Override
-	public boolean updateStudent(Student student) {
-		studentDao.update(student);
-		return true;
+	public Teacher getTeacherByUsername(String username) {
+		return teacherDao.getTeacherByUsername(username);
 	}
+	
+	@Override
+	public Set<Course> getTeachersCourses(Teacher teacher) {
+		return courseDao.getTeachersCourses(teacher);
+	}
+	
 	
 	@Override
 	public Student getStudent(long id) {
@@ -75,26 +75,21 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean approveCourseRequest(Long courseRequestId) {
-		studentDao.approveCourseRequest(courseRequestId);
-		return true;
-	}
-
-	@Override
 	public Student getStudentByUsername(String username) {
 		return studentDao.getStudentByUsername(username);
 	}
-
+	
 	@Override
-	public Teacher getTeacherByUsername(String username) {
-		return teacherDao.getTeacherByUsername(username);
+	public Student getStudentFullyInitializedByUsername(String username) {
+		return studentDao.getStudentFullyInitializedByUsername(username);
 	}
-
+	
 	@Override
-	public Set<Course> getTeachersCourses(Teacher teacher) {
-		return courseDao.getTeachersCourses(teacher);
+	public boolean saveStudent(Student student) {
+		studentDao.save(student);
+		return true;
 	}
-
+	
 	@Override
 	public boolean requestCourse(Student student, Long courseId) {
 		
@@ -110,18 +105,26 @@ public class UserServiceImpl implements UserService{
 		
 		return true;
 	}
-
+	
 	@Override
-	public Student getStudentFullyInitializedByUsername(String username) {
-		return studentDao.getStudentFullyInitializedByUsername(username);
+	public boolean addAbsence(Long studentId, Absence absence) {
+		studentDao.addAbsenceToStudent(studentId, absence);
+		return true;
 	}
 
 	@Override
-	public boolean isUsernameAvaiable(String username) {
-		
-		return adminDao.isUsernameAvaiable(username);
-		
+	public boolean addGrade(Long studentId, Grade grade) {
+		studentDao.addGradeToStudent(studentId, grade);
+		return true;
 	}
+
+
+
+
+
+
+
+
 	
 	
 	

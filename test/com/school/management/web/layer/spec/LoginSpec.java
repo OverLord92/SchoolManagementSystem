@@ -1,7 +1,9 @@
 package com.school.management.web.layer.spec;
 
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,6 +28,7 @@ import com.school.management.controllers.LoginAndRegisterController;
 import com.school.management.model.Admin;
 import com.school.management.model.Student;
 import com.school.management.model.Teacher;
+import com.school.management.model.abstr.User;
 import com.school.management.services.UserService;
 import com.school.management.test.util.TestUtil;
 
@@ -41,12 +44,25 @@ public class LoginSpec {
 	LoginAndRegisterController controller;
 	
 	private MockMvc mockMvc;
+
+	private User validUser;
+	private User invalidUser;
 	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		mockMvc = standaloneSetup(controller).build();
 		reset(userService);
+		
+		validUser = new User();
+		validUser.setUsername(TestUtil.createStringOfCertainLength(5));
+		validUser.setRawPassword(TestUtil.createStringOfCertainLength(5));
+		validUser.setFirstName("Imestudenta");
+		validUser.setLastName("Prezime");
+		
+		invalidUser = new User();
+		// set too long first name to violate validation constraints
+		invalidUser.setFirstName(TestUtil.createStringOfCertainLength(20));
 	}
 	
 	@Test
@@ -67,18 +83,46 @@ public class LoginSpec {
 	}
 	
 	@Test
+	public void shouldCheckUsernameAvailabilityAndReturnFalse() throws Exception {
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
+		
+		boolean response = controller.isUsernameAvaiable(anyString());
+		assertEquals(true, response);
+	}
+	
+	@Test
 	public void shouldRegisterStudent() throws Exception {
-		doReturn(true).when(userService).saveStudent(any());
-		mockMvc.perform(post("/registerStudent"))
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
+		
+		Student validStudent = new Student(validUser);
+		
+		System.out.println();
+		mockMvc.perform(post("/registerStudent")
+			.sessionAttr("student", validStudent)
+				)
 			.andExpect(view().name("redirect:/register"));
 	}
 	
 	@Test
-	public void shouldNotRegisterStudent() throws Exception {
-		
-		Student student = new Student();
-		student.setFirstName(TestUtil.createStringOfCertainLength(6));
-		
+	public void shouldNotRegisterStudentInvalidCredentials() throws Exception {
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
+
+		Student student = new Student(invalidUser);
+	
+		mockMvc.perform(post("/registerStudent")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
+				.sessionAttr("student", student)
+				)//.andDo(MockMvcResultHandlers.print())
+			.andExpect(view().name("/registration"));
+	}
+	
+	@Test
+	public void shouldNotRegisterStudentDuplicateUsername() throws Exception {
+		doReturn(false).when(userService).isUsernameAvaiable(anyString());
+
+		Student student = new Student(invalidUser);
+	
 		mockMvc.perform(post("/registerStudent")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
@@ -89,17 +133,36 @@ public class LoginSpec {
 	
 	@Test
 	public void shouldRegisterTeacher() throws Exception {
-		doReturn(true).when(userService).saveTeacher(any());
-		mockMvc.perform(post("/registerTeacher"))
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
+		
+		Teacher validTeacher = new Teacher(validUser);
+		
+		mockMvc.perform(post("/registerTeacher")
+				.sessionAttr("teacher", validTeacher)
+				)
 			.andExpect(view().name("redirect:/register"));
 	}
 	
 	@Test
-	public void shouldNotRegisterTeacher() throws Exception {
+	public void shouldNotRegisterTeacherBadCredentials() throws Exception {
 		
-		Teacher teacher = new Teacher();
-		teacher.setFirstName("duze nego dozvoljeno");
+		Teacher teacher = new Teacher(invalidUser);
 		
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
+		mockMvc.perform(post("/registerTeacher")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
+				.sessionAttr("teacher", teacher)
+				)//.andDo(MockMvcResultHandlers.print())
+			.andExpect(view().name("/registration"));
+	}
+	
+	@Test
+	public void shouldNotRegisterTeacherDuplicateUsername() throws Exception {
+		doReturn(false).when(userService).isUsernameAvaiable(anyString());
+		
+		Teacher teacher = new Teacher(invalidUser);
+	
 		mockMvc.perform(post("/registerTeacher")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
@@ -110,17 +173,37 @@ public class LoginSpec {
 	
 	@Test
 	public void shouldRegisterAdmin() throws Exception {
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
+		
+		Admin admin = new Admin(validUser);
+		
 		doReturn(true).when(userService).saveAdmin(any());
-		mockMvc.perform(post("/registerAdmin"))
+		mockMvc.perform(post("/registerAdmin")
+				.sessionAttr("admin", admin)
+				)
 			.andExpect(view().name("redirect:/register"));
 		
 	}
 	
 	@Test
-	public void shouldNotRegisterAdmin() throws Exception {
+	public void shouldNotRegisterAdminInvalidCredentials() throws Exception {
+		doReturn(true).when(userService).isUsernameAvaiable(anyString());
 		
-		Admin admin = new Admin();
-		admin.setFirstName("duze nego dozvoljeno");
+		Admin admin = new Admin(invalidUser);
+		
+		mockMvc.perform(post("/registerAdmin")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
+				.sessionAttr("admin", admin)
+				)//.andDo(MockMvcResultHandlers.print())
+			.andExpect(view().name("/registration"));
+	}
+	
+	@Test
+	public void shouldNotRegisterAdminInvalidDuplcateUsername() throws Exception {
+		doReturn(false).when(userService).isUsernameAvaiable(anyString());
+		
+		Admin admin = new Admin(invalidUser);
 		
 		mockMvc.perform(post("/registerAdmin")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)

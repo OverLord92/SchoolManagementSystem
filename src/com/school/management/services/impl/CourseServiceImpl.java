@@ -31,7 +31,12 @@ public class CourseServiceImpl implements CourseService {
 		courseDao.save(course);
 		return true;
 	}
-
+	
+	@Override
+	public Course getCourse(Long courseId) {
+		return courseDao.get(courseId);
+	}
+	
 	@Override
 	public List<Course> getAllCourses() {
 		return courseDao.getAll();
@@ -43,6 +48,27 @@ public class CourseServiceImpl implements CourseService {
 	}
 	
 	@Override
+	public List<Course> getAllNeitherRequestedNorAttendedCourses(Student student) {
+		List<Course> result = courseDao.getAllNeitherRequestedNorAttendedCourses(student.getId());
+		return result;
+	}
+	
+	@Override
+	public List<Student> getAllStudentsOfCourse(Long courseId) {
+		return courseDao.getAllStudentsOfCourse(courseId);
+	}
+	
+	@Override
+	public List<CourseRequest> allPendingRequests() {
+		return courseDao.getAllPendingRequests();
+	}
+	
+	@Override
+	public List<Teacher> getAllTeachers() {
+		return teacherDao.getAll();
+	}
+
+	@Override
 	public boolean assingCourseToTeacher(Long courseId, Long teacherId) {
 		Course course = courseDao.get(courseId);
 		Teacher teacher = teacherDao.get(teacherId);
@@ -50,34 +76,6 @@ public class CourseServiceImpl implements CourseService {
 		course.setTeacher(teacher);
 		courseDao.update(course);
 		return true;
-	}
-
-
-	@Override
-	public List<Course> getAllNeitherRequestedNorAttendedCourses(Student student) {
-		List<Course> result = courseDao.getAllNeitherRequestedNorAttendedCourses(student.getId());
-		return result;
-	}
-
-	@Override
-	public Course getCourse(Long courseId) {
-		return courseDao.get(courseId);
-	}
-
-
-	@Override
-	public List<Teacher> getAllTeachers() {
-		return teacherDao.getAll();
-	}
-
-	@Override
-	public List<CourseRequest> allPendingRequests() {
-		return courseDao.getAllPendingRequests();
-	}
-
-	@Override
-	public List<Student> getAllStudentsOfCourse(Long courseId) {
-		return courseDao.getAllStudentsOfCourse(courseId);
 	}
 
 }
