@@ -3,7 +3,7 @@ package com.school.management.services.impl;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.school.management.dao.interfaces.AdminDao;
 import com.school.management.dao.interfaces.CourseDao;
@@ -18,7 +18,7 @@ import com.school.management.model.Student;
 import com.school.management.model.Teacher;
 import com.school.management.services.UserService;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService{
 
 	@Autowired

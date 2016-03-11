@@ -14,7 +14,7 @@ import com.school.management.model.Teacher;
 @Repository
 public interface CourseDao extends GenericDao<Long, Course>{
 
-	List<Course> getFreeCourses();
+	List<Course> getAllUnassignedCourses();
 
 	List<CourseRequest> getAllPendingRequests();
 

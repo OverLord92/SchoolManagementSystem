@@ -112,9 +112,7 @@ public class AdminControllerSpec {
 	@Ignore
 	@Test
 	public void controllerMethodShouldReturnAllCoursesWichHaveNoAssignedTeacher() throws Exception {
-		doReturn(Arrays.asList(course1, course2)).when(courseService).getAllFreeCourses();
-		
-		System.out.println(courseService.getAllFreeCourses());
+		doReturn(Arrays.asList(course1, course2)).when(courseService).getAllUnassignedCourses();
 		
 		mockMvc.perform(get("getCoursesWithoutTeachers"))
 			.andDo(print())

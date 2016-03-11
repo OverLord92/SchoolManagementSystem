@@ -55,7 +55,7 @@ public class AdminController {
 			produces="application/json")
 	public @ResponseBody List<Course> getAllCoursesWithNoAssignedTeacher() {
 		
-		return courseService.getAllFreeCourses();  
+		return courseService.getAllUnassignedCourses();  
 	}
 	
 	/** Takes a teacherId and courseId and assigns the teacher to the course */

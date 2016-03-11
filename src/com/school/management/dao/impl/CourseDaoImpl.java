@@ -29,7 +29,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 	/** Returns all classes which don't have an assigned teacher */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Course> getFreeCourses() {
+	public List<Course> getAllUnassignedCourses() {
 		
 		Criteria criteria = getSession().createCriteria(Course.class);
 		criteria.add(Restrictions.isNull("teacher"));

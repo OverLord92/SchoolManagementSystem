@@ -15,7 +15,7 @@ public interface CourseService {
 	boolean addNewCourse(Course course);
 	Course getCourse(Long courseId);
 	List<Course> getAllCourses();
-	List<Course> getAllFreeCourses();
+	List<Course> getAllUnassignedCourses();
 	List<Course> getAllNeitherRequestedNorAttendedCourses(Student student);
 	
 	List<Student> getAllStudentsOfCourse(Long courseId);
