@@ -9,6 +9,7 @@ import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -68,14 +69,21 @@ public class LoginSpec {
 	@Test
 	public void shouldShowHomePage() throws Exception {
 		mockMvc.perform(get("/"))
+			.andExpect(status().isOk())
 			.andExpect(view().name("home"));
+	}	
+		
+	@Test
+	public void shouldShowLoginPage() throws Exception {
 		mockMvc.perform(get("/login"))
-		.andExpect(view().name("loginPage"));
+			.andExpect(status().isOk())
+			.andExpect(view().name("loginPage"));
 	}
 	
 	@Test
 	public void shouldShowRegistrationPage() throws Exception {
 		mockMvc.perform(get("/register"))
+			.andExpect(status().isOk())
 			.andExpect(view().name("registration"))
 			.andExpect(model().attribute("student", notNullValue()))
 			.andExpect(model().attribute("teacher", notNullValue()))
@@ -96,10 +104,10 @@ public class LoginSpec {
 		
 		Student validStudent = new Student(validUser);
 		
-		System.out.println();
 		mockMvc.perform(post("/registerStudent")
-			.sessionAttr("student", validStudent)
-				)
+			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+			.content(TestUtil.convertObjectToFormUrlEncodedBytes(validStudent))
+			.sessionAttr("student", validStudent))
 			.andExpect(view().name("redirect:/register"));
 	}
 	
@@ -107,13 +115,13 @@ public class LoginSpec {
 	public void shouldNotRegisterStudentInvalidCredentials() throws Exception {
 		doReturn(true).when(userService).isUsernameAvaiable(anyString());
 
-		Student student = new Student(invalidUser);
+		Student invalidStudent = new Student(invalidUser);
 	
 		mockMvc.perform(post("/registerStudent")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
-				.sessionAttr("student", student)
-				)//.andDo(MockMvcResultHandlers.print())
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(invalidStudent))
+				.sessionAttr("student", invalidStudent))
+			.andExpect(model().attributeHasFieldErrors("student", "firstName"))
 			.andExpect(view().name("/registration"));
 	}
 	
@@ -121,13 +129,13 @@ public class LoginSpec {
 	public void shouldNotRegisterStudentDuplicateUsername() throws Exception {
 		doReturn(false).when(userService).isUsernameAvaiable(anyString());
 
-		Student student = new Student(invalidUser);
+		Student invalidStudent = new Student(invalidUser);
 	
 		mockMvc.perform(post("/registerStudent")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
-				.sessionAttr("student", student)
-				)//.andDo(MockMvcResultHandlers.print())
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(invalidStudent))
+				.sessionAttr("student", invalidStudent))
+			.andExpect(model().attributeHasFieldErrors("student", "firstName"))
 			.andExpect(view().name("/registration"));
 	}
 	
@@ -138,22 +146,21 @@ public class LoginSpec {
 		Teacher validTeacher = new Teacher(validUser);
 		
 		mockMvc.perform(post("/registerTeacher")
-				.sessionAttr("teacher", validTeacher)
-				)
+				.sessionAttr("teacher", validTeacher))
 			.andExpect(view().name("redirect:/register"));
 	}
 	
 	@Test
 	public void shouldNotRegisterTeacherBadCredentials() throws Exception {
 		
-		Teacher teacher = new Teacher(invalidUser);
+		Teacher invalidTeacher = new Teacher(invalidUser);
 		
 		doReturn(true).when(userService).isUsernameAvaiable(anyString());
 		mockMvc.perform(post("/registerTeacher")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
-				.sessionAttr("teacher", teacher)
-				)//.andDo(MockMvcResultHandlers.print())
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(invalidTeacher))
+				.sessionAttr("teacher", invalidTeacher))
+			.andExpect(model().attributeHasFieldErrors("teacher", "firstName"))
 			.andExpect(view().name("/registration"));
 	}
 	
@@ -161,13 +168,13 @@ public class LoginSpec {
 	public void shouldNotRegisterTeacherDuplicateUsername() throws Exception {
 		doReturn(false).when(userService).isUsernameAvaiable(anyString());
 		
-		Teacher teacher = new Teacher(invalidUser);
+		Teacher invalidTeacher = new Teacher(invalidUser);
 	
 		mockMvc.perform(post("/registerTeacher")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
-				.sessionAttr("teacher", teacher)
-				)//.andDo(MockMvcResultHandlers.print())
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(invalidTeacher))
+				.sessionAttr("teacher", invalidTeacher))
+			.andExpect(model().attributeHasFieldErrors("teacher", "firstName"))
 			.andExpect(view().name("/registration"));
 	}
 	
@@ -175,12 +182,13 @@ public class LoginSpec {
 	public void shouldRegisterAdmin() throws Exception {
 		doReturn(true).when(userService).isUsernameAvaiable(anyString());
 		
-		Admin admin = new Admin(validUser);
+		Admin validAdmin = new Admin(validUser);
 		
 		doReturn(true).when(userService).saveAdmin(any());
 		mockMvc.perform(post("/registerAdmin")
-				.sessionAttr("admin", admin)
-				)
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(validAdmin))
+				.sessionAttr("admin", validAdmin))
 			.andExpect(view().name("redirect:/register"));
 		
 	}
@@ -189,13 +197,13 @@ public class LoginSpec {
 	public void shouldNotRegisterAdminInvalidCredentials() throws Exception {
 		doReturn(true).when(userService).isUsernameAvaiable(anyString());
 		
-		Admin admin = new Admin(invalidUser);
+		Admin invalidAdmin = new Admin(invalidUser);
 		
 		mockMvc.perform(post("/registerAdmin")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
-				.sessionAttr("admin", admin)
-				)//.andDo(MockMvcResultHandlers.print())
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(invalidAdmin))
+				.sessionAttr("admin", invalidAdmin))
+			.andExpect(model().attributeHasFieldErrors("admin", "firstName"))
 			.andExpect(view().name("/registration"));
 	}
 	
@@ -203,13 +211,13 @@ public class LoginSpec {
 	public void shouldNotRegisterAdminInvalidDuplcateUsername() throws Exception {
 		doReturn(false).when(userService).isUsernameAvaiable(anyString());
 		
-		Admin admin = new Admin(invalidUser);
+		Admin invalidAdmin = new Admin(invalidUser);
 		
 		mockMvc.perform(post("/registerAdmin")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				//.content(TestUtil.convertObjectToFormUrlEncodedBytes(student))
-				.sessionAttr("admin", admin)
-				)//.andDo(MockMvcResultHandlers.print())
+				.content(TestUtil.convertObjectToFormUrlEncodedBytes(invalidAdmin))
+				.sessionAttr("admin", invalidAdmin))
+			.andExpect(model().attributeHasFieldErrors("admin", "firstName"))
 			.andExpect(view().name("/registration"));
 	}
 

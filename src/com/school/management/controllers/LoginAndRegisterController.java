@@ -4,7 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.school.management.model.Admin;
 import com.school.management.model.Student;
@@ -63,7 +63,8 @@ public class LoginAndRegisterController {
 	
 	/** Handles student registration form */
 	@RequestMapping(value="/registerStudent", method=RequestMethod.POST)
-	public String registerStudent(@Valid @ModelAttribute Student student, Errors errors, Model model) {
+	public String registerStudent(@Valid @ModelAttribute Student student, 
+			Errors errors, SessionStatus status) {
 		
 		if(!userService.isUsernameAvaiable(student.getUsername())){
 			errors.reject("username", "Username is not available");
@@ -74,6 +75,8 @@ public class LoginAndRegisterController {
 			student.setEnabled(true);
 			student.setAuthority("STUDENT");
 			userService.saveStudent(student);
+			
+			status.setComplete();
 			return "redirect:/register";
 		} 
 		
@@ -83,7 +86,8 @@ public class LoginAndRegisterController {
 	
 	/** Handles teacher registration form */
 	@RequestMapping(value="/registerTeacher", method=RequestMethod.POST)
-	public String registerTeacher(@Valid Teacher teacher, Errors errors, Model model) {
+	public String registerTeacher(@Valid Teacher teacher, 
+			Errors errors, SessionStatus status) {
 		
 		if(!userService.isUsernameAvaiable(teacher.getUsername())){
 			errors.reject("username", "DuplicateKey.user.username");
@@ -94,6 +98,8 @@ public class LoginAndRegisterController {
 			teacher.setEnabled(true);
 			teacher.setAuthority("TEACHER");
 			userService.saveTeacher(teacher);
+			
+			status.setComplete();
 			return "redirect:/register";
 		} 
 		
@@ -103,7 +109,8 @@ public class LoginAndRegisterController {
 	
 	/** Handles administrator registration form */
 	@RequestMapping(value="/registerAdmin", method=RequestMethod.POST)
-	public String registerAdmin(@Valid Admin admin, Errors errors, Model model) {
+	public String registerAdmin(@Valid Admin admin, 
+			Errors errors, SessionStatus status) {
 		
 		if(!userService.isUsernameAvaiable(admin.getUsername())){
 			errors.reject("username", "DuplicateKey.user.username");
@@ -114,6 +121,8 @@ public class LoginAndRegisterController {
 			admin.setEnabled(true);
 			admin.setAuthority("ADMIN");
 			userService.saveAdmin(admin);
+			
+			status.setComplete();
 			return "redirect:/register";
 		} 
 		

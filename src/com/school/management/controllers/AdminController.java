@@ -51,16 +51,11 @@ public class AdminController {
 	}
 		
 	/** Returns all courses which have no assigned teacher */
-	@RequestMapping(value="getCoursesWithoutTeachers", method=RequestMethod.POST, 
+	@RequestMapping(value="getCoursesWithoutTeachers", method=RequestMethod.GET, 
 			produces="application/json")
-	public @ResponseBody Map<String, Object> getAllCoursesWithNoAssignedTeacher() {
+	public @ResponseBody List<Course> getAllCoursesWithNoAssignedTeacher() {
 		
-		List<Course> allFreeCourses = courseService.getAllFreeCourses();  
-		
-		Map<String, Object> resultData  = new HashMap<>();
-		resultData.put("allFreeCourses", allFreeCourses);
-		
-		return resultData;
+		return courseService.getAllFreeCourses();  
 	}
 	
 	/** Takes a teacherId and courseId and assigns the teacher to the course */

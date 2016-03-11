@@ -15,7 +15,7 @@ $(document).ready(function(){
 		alert(choosenTeacher);
 		
 		$.ajax({
-			type: 'POST',
+			type: 'GET',
 			url: 'getCoursesWithoutTeachers', 
 			accept: 'application/json',
 			success: getCoursesSuccess,
@@ -26,16 +26,16 @@ $(document).ready(function(){
 	});
 	
 	function getCoursesSuccess(data) {
-		$.each(data, function() {
-			$.each(this, function(k, v) {
-				$('.availableCourses').append(
-						'click on the course name' +
-						'<div class="availableCourse" id="'  + v.id + '">' +		
-						v.name
-						+ '</div><br>'
-				);
-			});
+		
+		$.each(data, function(index, currentCourse) {
+			$('.availableCourses').append(
+					'click on the course name' +
+					'<div class="availableCourse" id="'  + currentCourse.id + '">' +		
+					currentCourse.name
+					+ '</div><br>'
+			);
 		});
+		
 	}
 	
 	function getCoursesError() {
