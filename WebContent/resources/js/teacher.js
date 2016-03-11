@@ -15,15 +15,12 @@ $(document).ready(function(){
 		var methodLink = 'getStudentsCourse/' + choosenCourse;
 		
 		$.get(methodLink, function(data) {
-			$.each(data, function() {
-				$.each(this, function(k, v) {
-					
-					$('.studentsOfCourse').append(
-							'<div class="student" id="'+ v.id + '">' +
-							v.username
-							+ '<div>'
-					);
-				});
+			$.each(data, function(index, currentStudent) {
+				$('.studentsOfCourse').append(
+						'<div class="student" id="'+ currentStudent.id + '">' +
+						currentStudent.username
+						+ '<div>'
+				);
 			});
 		});
 		

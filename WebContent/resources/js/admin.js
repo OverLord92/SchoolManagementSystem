@@ -11,9 +11,7 @@ $(document).ready(function(){
 		
 		var id = $(this).attr('id');
 		choosenTeacher = id;
-		
-		alert(choosenTeacher);
-		
+	
 		$.ajax({
 			type: 'GET',
 			url: 'getCoursesWithoutTeachers', 
@@ -27,14 +25,18 @@ $(document).ready(function(){
 	
 	function getCoursesSuccess(data) {
 		
-		$.each(data, function(index, currentCourse) {
-			$('.availableCourses').append(
-					'click on the course name' +
-					'<div class="availableCourse" id="'  + currentCourse.id + '">' +		
-					currentCourse.name
-					+ '</div><br>'
-			);
-		});
+		if(data.length === 0) {
+			$('.availableCourses').append('no available courses');
+		} else {
+			$.each(data, function(index, currentCourse) {	
+				$('.availableCourses').append(
+						'click on the course name' +
+						'<div class="availableCourse" id="'  + currentCourse.id + '">' +		
+						currentCourse.name
+						+ '</div><br>'
+				);
+			});
+		}
 		
 	}
 	

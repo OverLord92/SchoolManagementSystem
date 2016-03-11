@@ -2,7 +2,6 @@ $(document).ready(function(){
 	
 	$('.requestLink').click(function(event){
 		event.preventDefault();
-		alert('klik');
 		
 		var url = $(this).attr('href');
 		

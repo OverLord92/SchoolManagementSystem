@@ -48,7 +48,6 @@ public class UserServiceSpec {
 	
 	private Course course;
 	private Student student;
-	@SuppressWarnings("unused")
 	private Teacher teacher;
 	private Admin admin;
 	private Absence absence;

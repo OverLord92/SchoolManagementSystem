@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,39 +16,40 @@
 	src="<spring:url value="/resources/js/student.js"/>"></script>
 </head>
 <body>
-<jsp:include page="../jspFragments/header.jsp" />
-<div class="container">
-	<h1>student</h1>
-</div>	
-<div class="container">
-	<div class="col-md-4">
-		<h3>attending courses</h3>
-		<c:forEach items="${attendingCourses}" var="currentCourse">
-			<div>
-				<a class="requestLink" href="#">${currentCourse.name}</a><br>
-			</div>
-		</c:forEach>
+	<jsp:include page="../jspFragments/header.jsp" />
+	<div class="container">
+		<h1>student</h1>
 	</div>
+	<div class="container">
+		<div class="col-md-4">
+			<h3>attending courses</h3>
+			<c:forEach items="${attendingCourses}" var="currentCourse">
+				<div>
+					<a class="requestLink" href="#">${currentCourse.name}</a><br>
+				</div>
+			</c:forEach>
+		</div>
 
-	<div class="col-md-4">
-		<h3>pending requests</h3>
-		<c:forEach items="${pendingRequests}" var="currentCourseRequest">
-			<div>
-				<a class="requestLink" href="#">${currentCourseRequest.courseName}</a><br>
-			</div>
-		</c:forEach>
-	</div>
+		<div class="col-md-4">
+			<h3>pending requests</h3>
+			<c:forEach items="${pendingRequests}" var="currentCourseRequest">
+				<div>
+					<a class="requestLink" href="#">${currentCourseRequest.courseName}</a><br>
+				</div>
+			</c:forEach>
+		</div>
 
-	<div class="col-md-4">
-		<h3>request course</h3>
-		<c:forEach items="${allAvailableCourses}" var="currentCourse">
-			<div>
-				<c:url value="/requestCourse/${currentCourse.id}" var="requestCourseLink"/>
-				<a class="requestLink" href="${requestCourseLink}">${currentCourse.name}</a><br>
-			</div>
-		</c:forEach>
+		<div class="col-md-4">
+			<h3>request course</h3>
+			<c:forEach items="${allAvailableCourses}" var="currentCourse">
+				<div>
+					<c:url value="/requestCourse/${currentCourse.id}"
+						var="requestCourseLink" />
+					<a class="requestLink" href="${requestCourseLink}">${currentCourse.name}</a><br>
+				</div>
+			</c:forEach>
+		</div>
+		<jsp:include page="../jspFragments/footer.jsp" />
 	</div>
-<jsp:include page="../jspFragments/footer.jsp" />
-</div>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.school.management.controllers;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -45,14 +44,9 @@ public class TeacherController {
 	
 	/** Returns all students who attend the course with the id courseId */
 	@RequestMapping(value="/getStudentsCourse/{courseId}", method=RequestMethod.GET, produces="application/json")
-	public @ResponseBody Map<String, Object> getStudentsWhoAttendThisCourse(@PathVariable Long courseId) {
+	public @ResponseBody List<Student> getStudentsWhoAttendThisCourse(@PathVariable Long courseId) {
 		
-		Map<String, Object> resultData = new HashMap<>();
-		
-		List<Student> students = courseService.getAllStudentsOfCourse(courseId);
-		resultData.put("studentsAtendingCourse", students);
-		
-		return resultData;
+		return courseService.getAllStudentsOfCourse(courseId);
 	}
 	
 	/** Handles dynamically generated form for adding absences */
