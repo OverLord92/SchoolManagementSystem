@@ -36,14 +36,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean saveAdmin(Admin admin) {
-		adminDao.save(admin);
-		return true;
+		return adminDao.save(admin);
 	}
 	
 	@Override
 	public boolean approveCourseRequest(Long courseRequestId) {
-		studentDao.approveCourseRequest(courseRequestId);
-		return true;
+		return studentDao.approveCourseRequest(courseRequestId);
 	}
 	
 	@Override
@@ -51,11 +49,9 @@ public class UserServiceImpl implements UserService{
 		return adminDao.isUsernameAvaiable(username);
 	}
 	
-	
 	@Override
 	public boolean saveTeacher(Teacher teacher) {
-		teacherDao.save(teacher);
-		return true;
+		return teacherDao.save(teacher);
 	}
 	
 	@Override
@@ -86,8 +82,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public boolean saveStudent(Student student) {
-		studentDao.save(student);
-		return true;
+		return studentDao.save(student);
 	}
 	
 	@Override

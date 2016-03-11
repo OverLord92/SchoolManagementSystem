@@ -92,7 +92,7 @@ public class TeacherController {
 		grade.setGrade(gradeValue);
 		
 		userService.addGrade(studentId, grade);
-		return false;
+		return true;
 	}
 	
 	

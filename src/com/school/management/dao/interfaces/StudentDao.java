@@ -11,16 +11,16 @@ import com.school.management.model.Student;
 @Repository
 public interface StudentDao extends GenericDao<Long, Student>{
 
+	Student getStudentByUsername(String username);
+	Student getStudentFullyInitializedByUsername(String username);
+	
 	boolean approveCourseRequest(Long courseRequstId);
 	void addGradeToStudent(Long studentId, Grade grade);
-	///////////////////
-	
-	
-	Student getStudentByUsername(String username);
-	
 	void addAbsenceToStudent(Long studentId, Absence absence);
 	void addCourseRequestToStudent(Student student, CourseRequest courseRequst);
-	Student getStudentFullyInitializedByUsername(String username);
+
+		
+	
 
 
 	
