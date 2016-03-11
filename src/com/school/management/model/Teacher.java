@@ -14,7 +14,6 @@ public class Teacher extends User {
 	
 	/** 
 	 * Constructor which wraps user object into a Teacher object.
-	 *  Is currently not used, but could be useful in future development.
 	 */
 	public Teacher(User user) {
 		this();

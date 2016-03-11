@@ -40,7 +40,6 @@ public class Student extends User {
 	
 	/** 
 	 * Constructor which wraps user object into a Student object.
-	 *  Is currently not used, but could be useful in future development.
 	 */
 	public Student(User user) {
 		this();

@@ -14,11 +14,12 @@
 	href="<spring:url value="/resources/css/admin.css"/>"
 	type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>login page</title>
 </head>
 <body>
 <jsp:include page="../jspFragments/header.jsp" />
 	<div class="container">
+
 	<h3>Login with Username and Password</h3><br><br>
 		<form name='f' action='${pageContext.request.contextPath}/login'
 			method='POST'>

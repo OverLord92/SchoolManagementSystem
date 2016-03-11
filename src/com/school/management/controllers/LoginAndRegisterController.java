@@ -38,7 +38,7 @@ public class LoginAndRegisterController {
 		return new Admin();
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping({ "/", "/home"})
 	public String showHome() {
 		return "home";
 	}

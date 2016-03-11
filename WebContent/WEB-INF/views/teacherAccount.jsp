@@ -17,19 +17,27 @@
 </head>
 <body>
 <jsp:include page="../jspFragments/header.jsp" />
-<h1>ticher</h1>
-	
+<div class="container">
+	<h1>ticher</h1>
+</div>
+
 <div class="container">
 	<div class="col-md-4">
-		<fieldset class="teacherCourses">
+		click on a course name to choose a course
+		<div class="teacherCourses">
+			<ul>
 			<c:forEach items="${teachersCourses}" var="course">
+				<li>
 				<div class="course" id="${course.id}">
 					${course.name}
 				</div>
+				</li>
 			</c:forEach>
-		</fieldset>
+			</ul>
+		</div>
 	</div>
 	<div class="col-md-4">
+		click on a student username to add grades of absences
 		<div class="studentsOfCourse">
 		</div>
 	</div>

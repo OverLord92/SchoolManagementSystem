@@ -15,7 +15,6 @@ public class Admin extends User {
 	
 	/** 
 	 * Constructor which wraps user object into a Admin object.
-	 *  Is currently not used, but could be useful in future development.
 	 */
 	public Admin(User user) {
 		this.setId(user.getId());

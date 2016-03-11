@@ -17,7 +17,9 @@
 </head>
 <body>
 <jsp:include page="../jspFragments/header.jsp" />
-<h1>admin</h1>
+	<div class="container">
+		<h1>admin</h1>
+	</div>
 <div class="container">
 	<div class="col-md-4">
 	<h3>student form:</h3>
