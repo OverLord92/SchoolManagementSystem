@@ -109,6 +109,9 @@ public class AdminControllerSpec {
 			.andExpect(redirectedUrl("/adminPage")); 
 	}
 	
+	
+	////////// need to figure out how to properly test controllers which handle ajax calls ///////////////
+	
 	@Ignore
 	@Test
 	public void controllerMethodShouldReturnAllCoursesWichHaveNoAssignedTeacher() throws Exception {
