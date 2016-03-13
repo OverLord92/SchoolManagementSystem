@@ -13,8 +13,7 @@
 <link rel="stylesheet"
 	href="<spring:url value="/resources/css/admin.css"/>" type="text/css" />
 <title>admin page</title>
-<script type="text/javascript"
-	src="<spring:url value="/resources/js/jquery.core.js"/>"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type="text/javascript"
 	src="<spring:url value="/resources/js/admin.js"/>"></script>
 

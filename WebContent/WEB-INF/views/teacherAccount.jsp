@@ -10,8 +10,7 @@
 	type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>teacher account</title>
-<script type="text/javascript"
-	src="<c:url value="/resources/js/jquery.core.js"/>"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/js/teacher.js"/>"></script>
 </head>
