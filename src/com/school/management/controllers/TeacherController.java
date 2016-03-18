@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.annotations.common.reflection.java.generics.TypeEnvironmentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,12 +58,13 @@ public class TeacherController {
 		Long courseId = Long.parseLong((String)requestData.get("courseId"));
 		
 		String comment = (String)requestData.get("comment");
-		Boolean justified = (Boolean)requestData.get("justified");
+
+		Boolean justified = Boolean.valueOf((String)requestData.get("justified"));
 		
 		Course course = courseService.getCourse(courseId);
 		Absence absence = new Absence();
 		absence.setCourse(course);
-		absence.setJustified(justified);
+		absence.setJustified((Boolean)justified);
 		absence.setComment(comment);
 		
 		userService.addAbsence(studentId, absence);
@@ -83,7 +85,7 @@ public class TeacherController {
 		
 		Grade grade = new Grade();
 		grade.setCourse(course);
-		grade.setGrade(gradeValue);
+		grade.setGradeValue(gradeValue);
 		
 		userService.addGrade(studentId, grade);
 		return true;

@@ -16,6 +16,10 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	public static final String ADMIN = "ADMIN";
+	public static final String TEACHER = "TEACHER";
+	public static final String STUDENT = "STUDENT";
 
 	@Autowired
 	private DataSource dataSource;
@@ -33,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	}
 		
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable();
@@ -42,22 +47,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login").permitAll()
 				.antMatchers("/").permitAll()
 				.antMatchers("/home").permitAll()
-				.antMatchers("/studentAccount").hasRole("STUDENT")
-				.antMatchers("/requestCourse/*").hasRole("STUDENT")
-				.antMatchers("/teacherAccount").hasRole("TEACHER")
-				.antMatchers("/getStudentsCourse/*").hasRole("TEACHER")
-				.antMatchers("/addAbsenceToUser").hasRole("TEACHER")
-				.antMatchers("/addGradeToUser").hasRole("TEACHER")
-				.antMatchers("/adminPage").hasRole("ADMIN")
-				.antMatchers("/register").hasRole("ADMIN")
-				.antMatchers("/registerStudent").hasRole("ADMIN")
-				.antMatchers("/registerTeacher").hasRole("ADMIN")
-				.antMatchers("/registerAdmin").hasRole("ADMIN")
-				.antMatchers("/addCourse").hasRole("ADMIN")
-				.antMatchers("/getCoursesWithoutTeachers").hasRole("ADMIN")
-				.antMatchers("/assignCourseToTeacher").hasRole("ADMIN")
-				.antMatchers("/approveCourserequest").hasRole("ADMIN")
-				.antMatchers("/checkUsernameAvailability").hasRole("ADMIN")
+				.antMatchers("/studentAccount").hasRole(STUDENT)
+				.antMatchers("/requestCourse/*").hasRole(STUDENT)
+				.antMatchers("/teacherAccount").hasRole(TEACHER)
+				.antMatchers("/getStudentsCourse/*").hasRole(TEACHER)
+				.antMatchers("/addAbsenceToUser").hasRole(TEACHER)
+				.antMatchers("/addGradeToUser").hasRole(TEACHER)
+				.antMatchers("/adminPage").hasRole(ADMIN)
+				.antMatchers("/register").hasRole(ADMIN)
+				.antMatchers("/registerStudent").hasRole(ADMIN)
+				.antMatchers("/registerTeacher").hasRole(ADMIN)
+				.antMatchers("/registerAdmin").hasRole(ADMIN)
+				.antMatchers("/addCourse").hasRole(ADMIN)
+				.antMatchers("/getCoursesWithoutTeachers").hasRole(ADMIN)
+				.antMatchers("/assignCourseToTeacher").hasRole(ADMIN)
+				.antMatchers("/approveCourserequest").hasRole(ADMIN)
+				.antMatchers("/checkUsernameAvailability").hasRole(ADMIN)
 				.antMatchers("/errorPages/*").permitAll()
 				.anyRequest().denyAll()
 			.and()

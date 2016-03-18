@@ -5,20 +5,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ErrorPagesController {
+	public static final String ACCESS_DENIED_PAGE = "errorPages/accessDenied";
+	public static final String PAGE_NOT_FOUND_PAGE = "errorPages/pageNotFound";
+	public static final String INTERNAL_SERVER_EXCEPTION_PAGE = "errorPages/internalServerException";
 
 	@RequestMapping("/accessDenied")
 	public String handleAccessDenied() {
-		return "errorPages/accessDenied";
+		return ACCESS_DENIED_PAGE;
 	}
 	
 	@RequestMapping("/pageNotFound")
 	public String handlePageNotFound() {
-		return "errorPages/pageNotFound";
+		return PAGE_NOT_FOUND_PAGE;
 	}
 	
 	@RequestMapping("/internalServerException")
 	public String handleInternalServerError() {
-		return "errorPages/internalServerException";
+		return INTERNAL_SERVER_EXCEPTION_PAGE;
 	}
 	
 }

@@ -53,7 +53,7 @@ public class StudentController {
 		Student student = userService.getStudentByUsername(username);
 		
 		userService.requestCourse(student, courseId);
-		
+
 		return true;
 	}
 }

@@ -53,7 +53,7 @@ public class AdminController {
 	@RequestMapping(value="getCoursesWithoutTeachers", method=RequestMethod.GET, 
 			produces="application/json")
 	public @ResponseBody List<Course> getAllCoursesWithNoAssignedTeacher() {
-		
+			
 		return courseService.getAllUnassignedCourses();  
 	}
 	

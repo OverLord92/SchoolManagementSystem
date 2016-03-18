@@ -1,12 +1,16 @@
 package com.school.management.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 /** Represents a students absence from a class. 
  *  Embedded in the Student class */
 @Embeddable 
-public class Absence {
+public class Absence implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	private Course course;

@@ -38,7 +38,7 @@
 						<label for="code">code</label>
 						<form:input path="code" />
 					</div>
-					<input type="submit" value="Add Course">
+					<input type="submit" class="btn btn-default" value="Add Course">
 				</div>
 			</form:form>
 		</div>
