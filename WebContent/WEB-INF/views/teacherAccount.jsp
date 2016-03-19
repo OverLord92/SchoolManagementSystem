@@ -18,6 +18,7 @@
 	<jsp:include page="../jspFragments/header.jsp" />
 	<div class="container">
 		<h1>ticher</h1>
+		<center><div id="responseStatus"></div></center>
 	</div>
 
 	<div class="container">

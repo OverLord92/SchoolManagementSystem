@@ -25,7 +25,6 @@ $(document).ready(function(){
 
 	function getCoursesSuccess(data) {
 
-		
 		if(data.length === 0) {
 			$('.availableCourses').append('no available courses');
 		} else {
@@ -35,11 +34,8 @@ $(document).ready(function(){
 				var courseNode = document.createElement("div");
 				courseNode.setAttribute("class", "availableCourse");
 				courseNode.setAttribute("id", currentCourse.id);
-				
 				courseNode.appendChild(document.createTextNode(currentCourse.name));
-				
 				$('.availableCourses').append(courseNode);
-				
 			});
 		}	
 	}
@@ -85,12 +81,19 @@ $(document).ready(function(){
 
 
 	function assignSuccess() {
-		alert('Successfully assigned course.');
+		$('#responseStatus')
+			.show()
+			.text("Course assigned successfuly.")
+			.fadeOut(2000);
+		
 		$('.availableCourses').empty();
 	}
 
 	function assignError() {
-		alert('error');
+		$('#responseStatus')
+			.show()
+			.text("Course was not assigned successfuly.")
+			.fadeOut(2000);
 	}
 });
 
@@ -117,12 +120,19 @@ $(document).ready(function() {
 	});
 
 	function approvalSuccess(item) {
-		alert('successfuly approved course request');
+		$('#responseStatus')
+			.show()
+			.text("Course Request successfuly approved.")
+			.fadeOut(2000);
+			
 		$(item).closest('div').remove();
 	}
 
 	function approvalError() {
-		alert('error');
+		$('#responseStatus')
+			.show()
+			.text("Course Request was not successfuly approved. Try again.")
+			.fadeOut(2000);
 	}
 	
 });

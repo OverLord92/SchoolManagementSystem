@@ -20,18 +20,14 @@ $(document).ready(function(){
 				var studentNode = document.createElement("div");
 				studentNode.setAttribute("class", "student");
 				studentNode.setAttribute("id", currentStudent.id);
-				
 				studentNode.appendChild(document.createTextNode(currentStudent.username));
-				
 				$('.studentsOfCourse').append(studentNode);
 
 			});
 		});
 
 		$('.studentsOfCourse').on('click', '.student', function() {
-
 			choosenStudent = $(this).attr('id');
-
 			$('.addAbsence').remove();
 			$('.addGrade').remove();
 			$('.student').css('color', 'black');
@@ -39,7 +35,6 @@ $(document).ready(function(){
 			
 			$(this).after(createGradeForm());
 			$(this).after(createAbsenceForm());
-			
 		});
 	});
 
@@ -68,20 +63,25 @@ $(document).ready(function(){
 	function addAbsenceSuccesencess() {
 		$('.addAbsence').remove();
 		$('.addGrade').remove();
-		alert('absence success');
+		
+		$('#responseStatus')
+			.show()
+			.text("Absence addded successfuly.")
+			.fadeOut(2000);
 	}
-
 	function addAbsenceError() {
 		$('.addAbsence').remove();
 		$('.addGrade').remove();
-		alert('absence eror');
-	}
 
+		$('#responseStatus')
+			.show()
+			.text("Absence wasnt't added.")
+			.fadeOut(2000);
+	}
 	// add grade
 	$('.studentsOfCourse').on('click', '.addGradeBtn', function() {
 
 		var grade = $('#grade').val();
-
 		$.ajax({
 			type: 'POST',
 			url: 'addGradeToUser',

@@ -54,7 +54,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Long, Course> implements Cours
 	public Set<Course> getTeachersCourses(Teacher teacher) {
 		Criteria criteria = getSession().createCriteria(Course.class);
 		criteria.add(Restrictions.eq("teacher", teacher));
-		return new HashSet<Course>(criteria.list());
+		return new HashSet<>(criteria.list());
 	}
 
 

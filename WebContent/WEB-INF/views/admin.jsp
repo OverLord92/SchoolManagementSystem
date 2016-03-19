@@ -22,6 +22,7 @@
 	<jsp:include page="../jspFragments/header.jsp" />
 	<div class="container">
 		<h1>course related tasks</h1>
+		<center><div id="responseStatus"></div></center>
 	</div>
 	<div class="container">
 		<div class="col-md-4">
