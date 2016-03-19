@@ -6,7 +6,7 @@ $(document).ready(function(){
 	// get students who attend clicked course
 	$('.course').click(function(event) {
 		event.preventDefault();
-
+		
 		$('.course').css('color', 'blue');
 		$(this).css('color', 'red');
 		$('.studentsOfCourse').empty();
@@ -42,6 +42,9 @@ $(document).ready(function(){
 
 		var justified = $('input:radio[name=justified]:checked').val();
 		var comment = $('#absenceComment').val();
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
 
 		$.ajax({
 			type: 'POST',
@@ -52,6 +55,9 @@ $(document).ready(function(){
 				justified: justified,
 				comment: comment
 			}),
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);
+	        },
 			accept: 'application/json',
 			success: addAbsenceSuccesencess,
 			error: addAbsenceError,
@@ -81,6 +87,9 @@ $(document).ready(function(){
 	// add grade
 	$('.studentsOfCourse').on('click', '.addGradeBtn', function() {
 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		var grade = $('#grade').val();
 		$.ajax({
 			type: 'POST',
@@ -90,6 +99,9 @@ $(document).ready(function(){
 				courseId: choosenCourse,
 				grade: grade
 			}),
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);
+	        },
 			accept: 'application/json',
 			success: addAbsenceSuccesencess,
 			error: addAbsenceError,

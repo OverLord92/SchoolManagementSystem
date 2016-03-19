@@ -64,6 +64,10 @@ $(document).ready(function(){
 
 	// assign course to teacher
 	$('.availableCourses').on('click', '#assignCourseButton', function(){
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		$.ajax({
 			type: 'POST',
 			url: 'assignCourseToTeacher',
@@ -71,6 +75,9 @@ $(document).ready(function(){
 				teacherId: choosenTeacher,
 				courseId: choosenCourse
 			}),
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);
+	        },
 			accept: 'application/json',
 			success: assignSuccess,
 			error: assignError,
@@ -103,12 +110,18 @@ $(document).ready(function() {
 	$('a.courseRequest').click(function(event){
 		event.preventDefault();
 
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
 		$.ajax({
 			type: 'POST',
 			url: 'approveCourserequest',
 			data: JSON.stringify({
 				courseRequestId: $(this).attr('id')
 			}),
+			beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);
+	        },
 			accept: 'application/json',
 			success: approvalSuccess(this),
 			error: approvalError,
