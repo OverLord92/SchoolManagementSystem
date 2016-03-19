@@ -112,7 +112,7 @@ public class AdminControllerSpec {
 	
 	////////// need to figure out how to properly test controllers which handle ajax calls ///////////////
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void controllerMethodShouldReturnAllCoursesWichHaveNoAssignedTeacher() throws Exception {
 		doReturn(Arrays.asList(course1, course2)).when(courseService).getAllUnassignedCourses();
@@ -120,7 +120,6 @@ public class AdminControllerSpec {
 		mockMvc.perform(get("getCoursesWithoutTeachers"))
 			.andDo(print())
 			.andExpect(jsonPath("$", hasSize(2)));
-//			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 	}
 	
 	@Ignore

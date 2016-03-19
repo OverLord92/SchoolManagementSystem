@@ -44,6 +44,7 @@
 						value="Login" class="btn btn-default" /></td>
 				</tr>
 			</table>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form>
 	</div>
 	<jsp:include page="../jspFragments/footer.jsp" />
