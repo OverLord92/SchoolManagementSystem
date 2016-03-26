@@ -18,7 +18,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script type="text/javascript"
 	src="<spring:url value="/resources/js/admin.js"/>"></script>
-
 </head>
 <body>
 	<jsp:include page="../jspFragments/header.jsp" />

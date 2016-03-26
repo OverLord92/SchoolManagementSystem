@@ -1,12 +1,15 @@
 package com.school.management.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.school.management.model.Course;
 import com.school.management.model.CourseRequest;
+import com.school.management.model.Student;
 import com.school.management.model.Teacher;
 import com.school.management.services.CourseService;
 import com.school.management.services.UserService;
@@ -22,7 +26,7 @@ import com.school.management.services.UserService;
 public class AdminController {
 
 	@Autowired
-	UserService useService;
+	UserService userService;
 	
 	@Autowired
 	CourseService courseService;
@@ -76,10 +80,31 @@ public class AdminController {
 	public @ResponseBody boolean approveCourseRequest(@RequestBody Map<String, Object> requestData) {
 		
 		Long courseRequestId = Long.parseLong((String)requestData.get("courseRequestId"));
-		useService.approveCourseRequest(courseRequestId);
+		userService.approveCourseRequest(courseRequestId);
 				
 		return true;
 	}
+	
+
+	@RequestMapping(value="/ticket")
+	public String showTicket(Model model) {
+		model.addAttribute("allUsers", courseService.getAllCourses());
+		return "ticket";
+	}
+	
+	@RequestMapping("getFavorites")
+	@ResponseBody
+	public List<Course> getFavoritesAsJson() {
+
+		Course course2 = new Course();
+		course2.setId(2L);
+		
+		Course course4 = new Course();
+		course4.setId(4L);
+		
+		return Arrays.asList(course2, course4);
+	}
+	
 	
 }
 
